@@ -1,11 +1,11 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240">
-  <!-- MicroWorld — ECLIPSE: the world, and the observer inside it -->
+  <!-- MicroWorld — ECLIPSE (ultramarine): the world, and the observer inside it -->
   <defs>
     <mask id="bite">
       <rect width="240" height="240" fill="white"/>
       <circle cx="190.71" cy="49.29" r="30" fill="black"/>
     </mask>
   </defs>
-  <circle cx="120" cy="120" r="100" fill="#FFFFFF" mask="url(#bite)"/>
-  <circle cx="190.71" cy="49.29" r="11.5" fill="#FFFFFF"/>
+  <circle cx="120" cy="120" r="100" fill="#5B9BFF" mask="url(#bite)"/>
+  <circle cx="190.71" cy="49.29" r="11.5" fill="#5B9BFF"/>
 </svg>
