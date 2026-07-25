@@ -248,3 +248,68 @@ are executable within one quarter by one person inside a group that has both.
 | [controller/execution.py](controller/execution.py) | `ALPACA_KEY` | Paper trading | ✅ |
 
 Committed keys: **zero**, by policy. See repo README § Security.
+
+---
+
+## 5 · Alternative data — the layer that makes prediction *lead* the market
+
+The tables above make the model publishable. This section is what makes it
+*predictive in production*: at the "post-strategy, pre-risk" position inside a
+quant stack, the model answers four questions — how crowded is this trade, what
+regime is the world in, what do the event operators do to it, and who is the
+counterparty — and none of them can be answered from price data.
+
+**Upgrade (belief measurement).** Options-implied risk-neutral densities are a
+*direct daily observation of the aggregate belief distribution* m̂ — the MFG's
+mean field, quoted live by the market. OptionMetrics (🎓 WRDS) / CBOE EOD (🆓)
+move from "nice-to-have" to **Tier-1 core** for equilibrium calibration (E3).
+
+**Upgrade (honesty infrastructure).** Point-in-time data is mandatory for any
+production claim: ALFRED (🆓 FRED vintages) + Compustat point-in-time (🎓).
+Without it every macro/fundamental backtest carries revision bias.
+
+**Free retail-flow measurement.** μ_retail does not require buying data:
+Boehmer–Jones–Zhang identification extracts retail order flow directly from
+TAQ prints — the intraday data we already require for E1 also yields E5's
+ground truth.
+
+| Category | What it feeds | Commercial | Free proxy to build NOW |
+|---|---|---|---|
+| Card-spend panels | Earnings-surprise Δ *before* the print → operator #6 becomes predictive | M Science · Second Measure · Facteus 💰💰 | none (this one is bought or borrowed) |
+| Machine-readable news | Event stream: the w in T_w, live | RavenPack · Bloomberg EDF 💰 | 🆓 GDELT 2.0 + Common Crawl News + self-hosted FinBERT |
+| Hiring / workforce | Firm expansion state (ℓ, κ dynamics) | Revelio · LinkUp 💰 | 🆓 Indeed/company-site scrapes |
+| Satellite / geospatial | Commodity & macro nowcasts (L0) | Orbital Insight · RS Metrics 💰 | 🆓 VIIRS night lights · MarineTraffic AIS free tier |
+| Web prices / e-commerce | CPI-surprise nowcast → operator #18 | PriceStats 💰 | 🆓 self-built price scrapes |
+| App usage | Consumer-tech DAU nowcasts | SensorTower · data.ai 💰 | 🆓 app-store rank scrapes |
+| Search & attention | μ_retail leading indicator | — | 🆓 Google Trends · Wikipedia pageviews API |
+| Supply chain | Real-economy transmission | Panjiva · FreightWaves 💰 | 🆓 mandated disclosures (e.g. TSMC monthly revenue) |
+| Insider / political flow | Informed-agent signals | 2iQ 💰 | 🆓 EDGAR Form 4 · congressional disclosures (Quiver) |
+| **AI-behavior detection** | Algorithmic-retail fingerprints in TAQ timestamps/sizes — the E5 empirical closure | *does not exist* | 🧪 ours to build (extends E5) |
+
+**Vendor track:** second-tier alt-data vendors routinely grant free academic
+pilots in exchange for a paper citation. Every vendor conversation on LinkedIn
+is a Tier-3 unlock at zero cost.
+
+## 6 · Production integration — enter the data perimeter, don't buy it
+
+The full commercial stack above costs seven figures a year. The structural
+fact that dissolves the problem: **any mid-size quant fund already subscribes
+to all of it.** The production ambition therefore has exactly one efficient
+path — a pilot inside one fund's data perimeter:
+
+- **The deal:** their data stays inside their walls; our overlay runs next to
+  it; results are co-owned. We bring the model, they bring the subscriptions.
+- **What only they can provide** (no purchase substitutes): candidate
+  portfolios pre-trade, historical fills & slippage (impact calibration),
+  strategy metadata (mapping onto our agent-type space), live risk limits
+  (the Λₜ integration point).
+- **The position in their stack:** post-strategy, pre-risk — a world-state
+  review layer answering: crowding of the candidate book, regime distance
+  Λₜ, operator-algebra scenario stress, and counterparty decomposition
+  (who is on the other side of this alpha, and is that sustainable?).
+
+**Three tracks, one program:** 🎓 academic (WRDS + free tier + $200 → the
+NeurIPS 2026 workshop paper) · 🏭 industrial (one fund pilot → Tier 1–4 at
+once) · 🤝 vendor (academic trials → Tier 3 for citations). The LinkedIn
+outreach targets all three: PhD students with WRDS, fund data-platform
+people, and alt-data vendor employees.
