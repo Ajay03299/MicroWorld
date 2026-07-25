@@ -216,7 +216,7 @@ The term "world model" is used loosely in the literature [5, 6, 7]. For financia
 
 ## The Market as a Four-Level Game
 
-![Capitalism Simulator — The Full Competitive Ecosystem](figures/capitalism_simulator.svg)
+![The four-level coupled market network — ≈5,000 agents, one nested mean-field game](figures/four_level_network.png)
 
 The visualization above is not an abstraction. It describes the actual competitive structure of global financial markets — **four nested levels** of agents, each playing a different kind of game, coupled through shared price processes, capital flows, and information cascades.
 
