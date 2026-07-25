@@ -53,6 +53,22 @@ python demo/global_demo.py     # reproduce this GIF end-to-end (~2 min, CPU, no 
 
 ---
 
+## The Story
+
+> It started on a Tuesday night in a Stanford basement, with a question three students couldn't put down:
+>
+> **Why does every trading model die the moment it goes live?**
+>
+> The answer isn't better data or bigger networks. Markets aren't datasets — they're games. Prices come from fifty thousand institutions, half a billion retail investors, and thirty central banks strategically reacting to each other — and to every model that dares to predict them. Predict the pattern, and the pattern disappears. The only thing left to model is the players themselves.
+>
+> Twenty-one days later, this repository is the result: **the first open-source world model architecture built for financial markets** — one that models the players, not the patterns, so its predictions are designed to survive their own deployment. The mathematics is proven, the code runs on a laptop, and the road to a live system is specified down to individual data files.
+>
+> This is [Alpha Flow](https://www.linkedin.com/company/alphaflowquant)'s first public artifact. The bet is placed — in public. What happens next depends on who joins.
+
+*— Alpha Flow Research · a Stanford basement · July 2026*
+
+---
+
 ## Table of Contents
 
 1. [The Problem Nobody Has Solved](#the-problem-nobody-has-solved)
