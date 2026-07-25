@@ -63,7 +63,7 @@ python demo/global_demo.py     # reproduce this GIF end-to-end (~2 min, CPU, no 
 >
 > Twenty-one days later, this repository is the result: **the first open-source world model architecture built for financial markets** — one that models the players, not the patterns, so its predictions are designed to survive their own deployment. The mathematics is proven, the code runs on a laptop, and the road to a live system is specified down to individual data files.
 >
-> This is [Alpha Flow](https://www.linkedin.com/company/alphaflowquant)'s first public artifact. The bet is placed — in public. What happens next depends on who joins.
+> This is Alpha Flow's first public artifact. The bet is placed — in public. What happens next depends on who joins.
 
 *— Alpha Flow Research · a Stanford basement · July 2026*
 
