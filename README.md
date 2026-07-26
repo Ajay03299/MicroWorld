@@ -6,6 +6,7 @@
 </picture>
 
 # MicroWorld
+# World Model Quantitative Finance
 *The first world model architecture designed for quantitative finance:*  
 *A new paradigm in quantitative finance that transcends traditional factor mining*
 
