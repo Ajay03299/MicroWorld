@@ -138,6 +138,40 @@ class TestCalibration:
             "Higher vol should give higher sigma_tau"
 
 
+class TestCramerRaoBound:
+    """Regression tests for DualNoiseParams.cramer_rao_bound (Bug #3)."""
+
+    def test_cramer_rao_bound_callable_with_h(self):
+        """cramer_rao_bound must accept explicit horizon parameter h."""
+        params = DualNoiseParams(sigma_tau=0.01, lambda_eta=2.0, m2_eta=0.001)
+        # Should not raise TypeError
+        result = params.cramer_rao_bound(h=5.0)
+        assert isinstance(result, float)
+        assert result > 0
+
+    def test_cramer_rao_bound_scales_with_horizon(self):
+        """Bound at horizon h should be h times the bound at horizon 1."""
+        params = DualNoiseParams(sigma_tau=0.01, lambda_eta=2.0, m2_eta=0.001)
+        bound_1 = params.cramer_rao_bound(h=1.0)
+        bound_5 = params.cramer_rao_bound(h=5.0)
+        np.testing.assert_allclose(bound_5, 5.0 * bound_1, rtol=1e-10)
+
+    def test_cramer_rao_bound_default_h(self):
+        """Default h=1.0 should produce the same result as explicit h=1.0."""
+        params = DualNoiseParams(sigma_tau=0.02, lambda_eta=1.0, m2_eta=0.005)
+        np.testing.assert_allclose(
+            params.cramer_rao_bound(),
+            params.cramer_rao_bound(h=1.0),
+        )
+
+    def test_cramer_rao_bound_matches_formula(self):
+        """Verify against Theorem III.1: (σ_τ² + λ_η · m₂^η) · h."""
+        params = DualNoiseParams(sigma_tau=0.03, lambda_eta=5.0, m2_eta=0.01)
+        h = 3.0
+        expected = (0.03**2 + 5.0 * 0.01) * h
+        np.testing.assert_allclose(params.cramer_rao_bound(h=h), expected, rtol=1e-10)
+
+
 if __name__ == "__main__":
     import pytest
     pytest.main([__file__, "-v"])

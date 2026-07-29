@@ -14,7 +14,7 @@ Cramér-Rao lower bound (Theorem III.1):
 """
 import numpy as np
 from dataclasses import dataclass
-from typing import Optional
+from numpy.typing import NDArray
 
 
 @dataclass
@@ -27,9 +27,8 @@ class DualNoiseParams:
     @property
     def tau_t(self) -> float:
         """Composite temperature parameter from §III.5: τ_t = √(σ_τ² + λ_η · m₂^η)"""
-        return np.sqrt(self.sigma_tau**2 + self.lambda_eta * self.m2_eta)
+        return float(np.sqrt(self.sigma_tau**2 + self.lambda_eta * self.m2_eta))
 
-    @property
     def cramer_rao_bound(self, h: float = 1.0) -> float:
         """Prediction variance lower bound for horizon h (Theorem III.1)."""
         return (self.sigma_tau**2 + self.lambda_eta * self.m2_eta) * h
@@ -49,14 +48,19 @@ class DualNoiseCalibrator:
     def __init__(self, alpha_lm: float = 0.001):
         self.alpha_lm = alpha_lm  # Lee-Mykland significance level
 
-    def estimate_bpv(self, returns: np.ndarray) -> float:
+    def estimate_bpv(self, returns: NDArray[np.float64]) -> float:
         """Bipower variation estimate of integrated physical variance."""
         if len(returns) < 2:
             return 0.0
         bpv = (np.pi / 2) * np.sum(np.abs(returns[1:]) * np.abs(returns[:-1]))
-        return bpv
+        return float(bpv)
 
-    def detect_jumps(self, returns: np.ndarray, bpv: float, dt: float = 1/78) -> np.ndarray:
+    def detect_jumps(
+        self,
+        returns: NDArray[np.float64],
+        bpv: float,
+        dt: float = 1 / 78,
+    ) -> NDArray[np.bool_]:
         """
         Lee-Mykland (2008) jump detection. Returns boolean mask of jump indices.
         dt = bar interval as fraction of day (e.g. 1/78 for 5-min bars).
@@ -68,9 +72,13 @@ class DualNoiseCalibrator:
             return np.zeros(0, dtype=bool)
         sigma_hat = np.sqrt(bpv / len(returns))  # per-bar vol estimate
         critical = sigma_hat * self._lee_mykland_critical(len(returns))
-        return np.abs(returns) > critical
+        return np.asarray(np.abs(returns) > critical, dtype=np.bool_)
 
-    def calibrate(self, intraday_returns: np.ndarray, dt: float = 1/78) -> DualNoiseParams:
+    def calibrate(
+        self,
+        intraday_returns: NDArray[np.float64],
+        dt: float = 1 / 78,
+    ) -> DualNoiseParams:
         bpv = self.estimate_bpv(intraday_returns)
         jump_mask = self.detect_jumps(intraday_returns, bpv, dt)
         jump_sizes = intraday_returns[jump_mask]
@@ -89,4 +97,9 @@ class DualNoiseCalibrator:
     def _lee_mykland_critical(n: int, alpha: float = 0.001) -> float:
         """Approximate critical value for Lee-Mykland test."""
         c = np.sqrt(2 * np.log(n))
-        return c + (np.log(np.log(n)) + np.log(4 * np.pi) - 2 * np.log(-np.log(1 - alpha))) / (2 * c)
+        critical = c + (
+            np.log(np.log(n))
+            + np.log(4 * np.pi)
+            - 2 * np.log(-np.log(1 - alpha))
+        ) / (2 * c)
+        return float(critical)
