@@ -53,6 +53,16 @@
 - **The signal** — divergence D_t = P_t/P^eq_t − 1 above threshold *while the institutional mean field is rotating out* — fires **11 trading days (≈2 weeks) before the unwind accelerates**. Retail capitulates at the lows; institutions buy them; the price re-joins its denoised track.
 - **Who it serves:** mid/long-horizon holders (To-C, retail). Deliberately **not** intraday or high-frequency traders — at those horizons behavioral noise dominates, and Theorem 1 (the dual Cramér-Rao bound) proves no volume of data can out-model it. At weeks-to-months horizons the equilibrium component dominates, and that is exactly where this model is built to work. *(A research signal, not investment advice. The real-data version, under the same no-look-ahead rules as our 2008 hindcast, is experiment [E7](RESOURCES.md).)*
 
+**The real-data check — July 2026, replayed on real prices.** We froze the 2008 recipe — weights, threshold, sustain rule unchanged, one disclosed adaptation (funding stress → crowding extension) — and replayed the memory basket (SK Hynix, Samsung, Micron, Western Digital, Seagate, SanDisk; daily closes vendored in the repo, keyless) walk-forward through this month's unwind: `python demo/hindcast_memory_2026.py`.
+
+[![Memory 2026 hindcast — the frozen 2008 recipe on real data](figures/hindcast_memory_2026.png)](demo/hindcast_memory_2026.py)
+
+- **Three years, zero alarms** — through the 2022 memory bear and the 2023–25 recovery, Λₜ never crossed its threshold once.
+- **The first alarm of the entire sample: October 22, 2025** — the AI-memory mania itself. The sector left its stable regime **232 trading days before July 2026 delivered its worst month since 2008** (SK Hynix −55% from its peak, in the vendored data).
+- **And the honest other half:** after the alarm, the basket rose another **+446%** before it broke. Basin-exit detection is not crash timing — an unstable crowding regime can keep inflating for months. *When* it breaks is governed by **who is holding the wedge up and when they rotate out** — the institutional field κ. That κ-rotation condition is exactly the second half of the MVP signal in the synthetic demo above, and reconstructing it from real 13F/COT positioning is experiment [E7](RESOURCES.md).
+
+No "we predicted it" claim — this is a hindcast computed after the event, and the figure says so on its face. What it demonstrates is the division of labor inside one world model: **Λₜ tells you the regime is unstable; the divergence D_t with κ-rotation tells you when the instability resolves.** The synthetic demo shows the second half working; E7 makes it real.
+
 **How can this exist at all?** Because nothing under the hood is feature engineering or factor mining. It is a **world model of the market's players**: institutions and retail cohorts as interacting agents in a four-layer, fully connected network — solved *today* as a hierarchical mean-field game (Phase 1: the correct regime while data is scarce), and designed to be trained *tomorrow* as a network whose **every neuron is itself a small neural network** with its own objective (Phase 2: [NNGS](docs/PHASE2_NEURAL_GAME.md), awaiting H200-class compute). Because the price is **derived from the game** rather than fit to the data, every move it predicts is **causally attributable** — which agents, which constraint, which coupling. That is the difference between us and every factor shop: [we did not find structure in the data — we modeled the structure that makes the data ↓](#the-first-principles-bet--causality-over-correlation)
 
 *The institutional line runs the same engine in reverse — including a 2008 hindcast whose crisis indicator exited the stable regime **272 trading days before Lehman**, on public data with no look-ahead: [Two Products, One Engine](#two-products-one-engine).*
@@ -913,7 +923,8 @@ MicroWorld/
 ├── demo/
 │   ├── run_egamec.py          #   30-second E-Game-C pipeline demo
 │   ├── global_demo.py         #   ★ The animated world-model demo (GIF above)
-│   ├── hindcast_2008.py       #   The 2008 walk-forward hindcast (figure at top)
+│   ├── hindcast_2008.py       #   The 2008 walk-forward hindcast
+│   ├── hindcast_memory_2026.py#   Memory 2026: frozen 2008 recipe, real data
 │   ├── denoised_price_2026.py #   To-C concept demo: denoised equilibrium price
 │   └── synthetic_market.py    #   Dual-noise synthetic market generator
 │
@@ -958,6 +969,9 @@ python demo/run_egamec.py
 
 # 2b · The denoised-price concept demo (To-C product line, synthetic)
 python demo/denoised_price_2026.py
+
+# 2c · The memory-2026 hindcast — frozen 2008 recipe on real vendored data
+python demo/hindcast_memory_2026.py
 
 # 3 · Regenerate every figure in this README from library code
 python scripts/make_figures.py

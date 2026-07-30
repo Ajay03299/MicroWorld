@@ -48,7 +48,12 @@ graduates to a real-data experiment:
 
 Data unlock: same as E1–E3 (nothing new to buy). Priority: **P0 for the
 product line** — this is the first exhibit any retail-facing partner will
-ask for.
+ask for. A first price-only step already ships in the repo:
+[`demo/hindcast_memory_2026.py`](demo/hindcast_memory_2026.py) replays the
+frozen 2008 Λₜ recipe on real vendored memory-sector data (alarm
+2025-10-22, 232 trading days before the July 2026 capitulation — and the
+basket rose another +446% first, which is precisely why E7's κ-rotation
+half is needed).
 
 ## 2 · Pillar two: training compute
 
