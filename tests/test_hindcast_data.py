@@ -88,3 +88,27 @@ class TestDemoRuns:
         assert r.returncode == 0, f"demo failed:\n{r.stderr}"
         assert "2007-08-16" in r.stdout, "sustained-signal date changed"
         assert "272 trading days before Lehman" in r.stdout
+
+
+class TestNoUntrackedFixtures:
+    """
+    Generalizes #1 past the four 2008 files. The defect was never that one
+    directory was missing — it is that an unanchored `*.csv` silently drops
+    fixtures from any demo. It recurred in demo/data/memory2026/, so the
+    guard walks demo/data/ rather than naming files.
+    """
+
+    def test_all_demo_csvs_are_tracked(self):
+        root = os.path.join(REPO, "demo", "data")
+        found = [
+            os.path.relpath(os.path.join(d, n), REPO)
+            for d, _, names in os.walk(root)
+            for n in names
+            if n.endswith(".csv")
+        ]
+        assert found, "no demo fixtures found under demo/data/"
+        r = subprocess.run(
+            ["git", "ls-files", "--error-unmatch", *found],
+            cwd=REPO, capture_output=True, text=True,
+        )
+        assert r.returncode == 0, f"untracked demo fixtures:\n{r.stderr}"
