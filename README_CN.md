@@ -27,7 +27,7 @@
 [![Instagram](https://img.shields.io/badge/Instagram-mr.abstractor__ust-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/mr.abstractor_ust/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-HongJin%20HE-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hongjinhe-hkust-edu)
 
-**[English](README.md) | [中文文档](README_CN.md)**
+**[English](README.md) | [中文文档](README_CN.md) | [日本語](docs/i18n/README_JA.md) | [한국어](docs/i18n/README_KO.md)**
 
 **Alpha Flow Research · 何泓锦 · 香港科技大学 / 斯坦福 IHP · 2026年7月**
 
@@ -83,31 +83,37 @@ python demo/global_demo.py     # 端到端复现此 GIF（约 2 分钟，仅 CPU
 
 *—— Alpha Flow Research · 斯坦福某间地下室 · 2026年7月*
 
+*更长的版本——一个世界模型怀疑论者，如何被会做梦的机器人、会预判的自动驾驶和一个违背第一性原理的因子动物园说服——在 **[docs/JOURNEY.md](docs/JOURNEY.md)**（英文）。*
+
 ---
 
 ## 目录
 
 1. [没有人真正解决的问题](#没有人真正解决的问题)
-2. [为什么这个问题现在最紧迫](#为什么这个问题现在最紧迫)
-3. [前人的研究——以及它们为什么不够](#前人的研究以及它们为什么不够)
-4. [两种世界模型：Type 1 与 Type 2](#两种世界模型type-1-与-type-2)
-5. [市场作为四层博弈](#市场作为四层博弈)
-6. [E-Game-C 架构](#e-game-c-架构)
-7. [数学框架：双线并行](#数学框架双线并行)
-8. [统一演化方程](#统一演化方程定理91)
-9. [七大定理](#七大定理)
-10. [反身性——形式化索罗斯](#反身性形式化索罗斯)
-11. [主体分类法](#主体分类法)
-12. [与2026年菲尔兹奖的联系](#与2026年菲尔兹奖的联系邓煜)
-13. [这让什么成为可能](#这让什么成为可能)
-14. [数据需求与研究路线图](#数据需求与研究路线图)
-15. [17 天笔记本系列](#17-天笔记本系列)
-16. [仓库结构](#仓库结构)
-17. [快速开始](#快速开始)
-18. [相关工作与定位](#相关工作与定位)
-19. [项目路线图](#项目路线图)
-20. [参考文献](#参考文献)
-21. [引用](#引用)
+2. [第一性原理之赌——因果而非相关](#第一性原理之赌因果而非相关)
+3. [为什么这个问题现在最紧迫](#为什么这个问题现在最紧迫)
+4. [前人的研究——以及它们为什么不够](#前人的研究以及它们为什么不够)
+5. [两种世界模型：Type 1 与 Type 2](#两种世界模型type-1-与-type-2)
+6. [市场作为四层博弈](#市场作为四层博弈)
+7. [E-Game-C 架构](#e-game-c-架构)
+8. [数学框架：双线并行](#数学框架双线并行)
+9. [统一演化方程](#统一演化方程定理91)
+10. [七大定理](#七大定理)
+11. [反身性——形式化索罗斯](#反身性形式化索罗斯)
+12. [主体分类法](#主体分类法)
+13. [与2026年菲尔兹奖的联系](#与2026年菲尔兹奖的联系邓煜)
+14. [这让什么成为可能](#这让什么成为可能)
+15. [同一引擎，两条产品线](#同一引擎两条产品线)
+16. [数据需求与研究路线图](#数据需求与研究路线图)
+17. [17 天笔记本系列](#17-天笔记本系列)
+18. [仓库结构](#仓库结构)
+19. [快速开始](#快速开始)
+20. [相关工作与定位](#相关工作与定位)
+21. [项目路线图——第一阶段与第二阶段](#项目路线图第一阶段与第二阶段)
+22. [Star 增长曲线](#star-增长曲线)
+23. [合作与联系](#合作与联系)
+24. [参考文献](#参考文献)
+25. [引用](#引用)
 
 ---
 
@@ -124,6 +130,28 @@ python demo/global_demo.py     # 端到端复现此 GIF（约 2 分钟，仅 CPU
 > **是否存在一个完备的数学理论——类比于统计力学或动理学理论——能够将金融市场描述为其本来面目：一个异质主体之间的多层次、多时间尺度、多目标博弈？**
 
 答案是肯定的。本仓库呈现这个理论及其工程实现。
+
+---
+
+## 第一性原理之赌——因果而非相关
+
+每一种主流量化方法——因子挖掘、时间序列建模、特征工程——都建立在一个未经审视的前提上：**历史数据会重演。** 它不会。每一个回测出来的模式，都是一场博弈的快照，而博弈的玩家早已改变了策略——部分原因恰恰是这个模式被发现了。这就是长出牙齿的卢卡斯批判，也是因子动物园持续衰减、已部署模型不断死亡的原因。
+
+但确实有东西在重演。不是数据——而是**生成数据的那个世界**：有法定授权的机构、有规则的监管者、不因信号被发表而改变的激励结构。历史不会重复它的价格，历史重复的是它的*机制*。因此，唯一能承载意义的因子，是回到世界本身推导出来的因子——本项目拒绝为残渣建模，因为我们可以为生成器建模：
+
+| | 模式范式（因子、时序ML） | 世界模型范式（本仓库） |
+|---|---|---|
+| **建模对象** | 市场留下的数据 | 市场本身：主体、约束、均衡 |
+| **一个"因子"是** | 一条样本内有效的相关性 | 均衡条件中的一项，附带机制 |
+| **机制断裂时** | 静默失效——无从解释 | 解释*就是*模型：哪些主体、哪条约束、哪个耦合 |
+| **部署之后** | 信号被侵蚀（拥挤） | 信号被强化（均衡自洽） |
+
+由此推出两个结论，它们就是本项目的身份：
+
+1. **可解释性不是附加功能，而是推断的方向。** 我们不是拟合价格再祈祷其中有意义；我们建模机制，然后*推导*价格必须如何运动。每一个输出都可归因于具名的主体、具名的约束和一个可检查的均衡条件。
+2. **模型经得起与市场的接触。** 一个本身就是均衡的预测，不会因为被执行而蒸发——被执行，正是均衡实现自身的方式。
+
+> **我们没有在数据里找到结构。我们建模了生成数据的结构。** 这一句话，就是本仓库与今天所有在产模式挖掘系统的全部区别。
 
 ---
 
@@ -734,6 +762,38 @@ $\pi^* = (\gamma\Sigma + \lambda I)^{-1}(\mu + \lambda\,\mu^{\text{MFG}})$
 
 ---
 
+## 同一引擎，两条产品线
+
+同一个 E-Game-C 内核，面向两类受众呈现为两个产品。
+
+### To-C · 去噪均衡价格（中长期持有）
+
+定理1说明：行为噪声 ν_η 是任何人都无法通过交易战胜的——散户尤其如此。一个长期投资者真正需要的，是噪声*之下*的那个分量：**均衡轨迹 P^eq**——当每一个主体都打出理性策略后，这个资产值多少钱——以及偏离度 **D_t = P_t/P^eq_t − 1**。它只回答一个问题：*你买入的是价值，还是拥挤？*
+
+[![去噪均衡价格——合成数据概念演示](figures/denoised_price_demo.png)](demo/denoised_price_2026.py)
+
+上图是**合成数据**——一个以2026年7月存储板块崩盘为情境原型的概念演示：那个月费城半导体指数下跌19%（2008年以来最差单月），散户在低点恐慌抛售，而机构在同一低点买入。在模拟中，信号——偏离度突破阈值*且机构平均场正在撤出*——在崩盘加速前 **11个交易日（约两周）** 触发。真实数据版本遵循与2008年回测完全相同的诚实规则（滚动前向、无未来函数），已定义为实验 **[E7](RESOURCES.md)**。
+
+```bash
+python demo/denoised_price_2026.py   # 复现上图——合成数据，CPU，无需密钥
+```
+
+> *研究信号，而非投资建议。* 去噪价格是面向中长期持仓的标的级研究层。它不是个性化投资建议，本仓库也不是投资顾问。
+
+### To-B · 机构级结构性风险
+
+对基金、风控台和平台，同一套均衡机器反向运行——卖的不是均衡本身，而是**与均衡的距离**：
+
+- **Λₜ 机制监控**——2008/2020级别的稳定域逃逸信号，盘中运行（[`online/regime_detector.py`](online/regime_detector.py)）
+- **拥挤度分解**——一本账簿的盈亏中，多少来自均衡漂移、多少来自行为楔子，逐仓位归因
+- **事件算子情景分析**——并购、政策、退市作为第一等算子作用于*今天*的状态，而非历史类比
+
+生产环闭环（Airflow DAG → 噪声 → 编码器 → MFG → 信号 → 执行）已在 [`online/`](online/) 搭好脚手架，含 Alpaca 模拟盘 stub。这是路线图的地平线3。
+
+**同一引擎，两个表面：** 散户产品卖的是均衡，机构产品卖的是对均衡的偏离。二者是同一次求解的两个输出。
+
+---
+
 ## 数据需求与研究路线图
 
 数学已闭合，代码在合成数据上端到端运行。从原型到经过验证的研究工具，路上缺的是**数据**——数百条零散的数据流，每一条喂给特定方程的特定一项。完整获取计划在 **[DATA_REQUIREMENTS.md](DATA_REQUIREMENTS.md)**：每个数据源具名、每个 stub 定位到行、每项成本分档，以及——对于世界上还不存在的数据——创造它们的实验设计。
@@ -828,6 +888,8 @@ MicroWorld/
 ├── demo/
 │   ├── run_egamec.py          #   30秒 E-Game-C 流水线演示
 │   ├── global_demo.py         #   ★ 动画世界模型演示（顶部GIF）
+│   ├── hindcast_2008.py       #   2008滚动前向回测（顶部图）
+│   ├── denoised_price_2026.py #   To-C概念演示：去噪均衡价格
 │   └── synthetic_market.py    #   双噪声合成市场生成器
 │
 ├── scripts/make_figures.py    # 从库代码重新生成README全部图表
@@ -835,6 +897,8 @@ MicroWorld/
 ├── figures/                   # 全部SVG图 + 生成的PNG + 演示GIF
 ├── tests/                     # 50个测试，全部通过（噪声·事件·特征）
 ├── DATA_REQUIREMENTS.md       # ★ 完整数据与实验路线图
+├── RESOURCES.md               # ★ 数据+算力定价——资金用途视角
+├── docs/                      #   JOURNEY · PHASE2_NEURAL_GAME · ONE_PAGER · i18n
 ├── CITATION.cff               # 可引用元数据
 └── .github/workflows/ci.yml   # CI：pytest on 3.11 / 3.12
 ```
@@ -847,6 +911,10 @@ MicroWorld/
 |---|---|---|
 | **工程实现**（E-Game-C） | [us-equity-world-model](https://github.com/hongjin-he/us-equity-world-model) | 完整构建手册：数据层、编码器、MFG求解器、控制器、回测、部署 |
 | **数学论文** | [mathmatical-framework-for-world-models-in-quant-finance](https://github.com/hongjin-he/mathmatical-framework-for-world-models-in-quant-finance) | Alpha Flow 02：全部证明，9个定理，25页 |
+| **心路历程** | [docs/JOURNEY.md](docs/JOURNEY.md) | 从世界模型怀疑论者到这套架构——以及完成说服的那些机器人、汽车与梦境 |
+| **第二阶段设计** | [docs/PHASE2_NEURAL_GAME.md](docs/PHASE2_NEURAL_GAME.md) | 神经网络博弈结构：每个神经元本身是一个主体网络 |
+| **资源与资金用途** | [RESOURCES.md](RESOURCES.md) | 数据+算力按场景定价；实验E7–E11 |
+| **一页纸** | [docs/ONE_PAGER.md](docs/ONE_PAGER.md) | 面向合作方与投资人的单页项目全景 |
 
 ---
 
@@ -862,6 +930,9 @@ python demo/global_demo.py
 
 # 2 · 30秒流水线演示
 python demo/run_egamec.py
+
+# 2b · 去噪价格概念演示（To-C产品线，合成数据）
+python demo/denoised_price_2026.py
 
 # 3 · 从库代码重新生成本README全部图表
 python scripts/make_figures.py
@@ -915,7 +986,7 @@ MicroWorld 相对每条相邻研究线的位置：
 
 ---
 
-## 项目路线图
+## 项目路线图——第一阶段与第二阶段
 
 本项目刻意坚持**双重标准**：
 
@@ -931,6 +1002,12 @@ E3（均衡一致性 vs 13F/COT）、E6（L0传导）、在真实面板上训练
 
 **地平线3——工业产品（P2）。**
 每日实盘流水线（Airflow DAG已搭好脚手架）、经Alpaca stub的模拟盘交易、监控面板，以及——算力允许时——以 Type 1 均衡为外层循环的 Type 2 沙盒。
+
+---
+
+以上全部属于**第一阶段——博弈论内核**：用数学结构补偿稀缺的数据，而且这不是妥协——定理1证明了残差中有一部分*只能*被机制解释、永远无法靠堆数据估计掉，所以在今天的数据获取水平上，结构优先在理论上就是正确的选择。当清理好的数据面板与 H200 级算力同时就位，这套架构将按计划蜕皮：
+
+**第二阶段——[神经网络博弈结构](docs/PHASE2_NEURAL_GAME.md)（NNGS）。** 一个**每个神经元本身就是一个小神经网络**的网络——每个机构或散户群体一个，各有自己的目标函数与信息集；监管现实作为架构直接施加（同一类型的所有主体共享其监管者的约束模块）；前向传播*就是*博弈的进行。环境与博弈人群放在一个网络还是两个网络，交给实验裁决而非审美（E8）。训练难度大约平方化——这正是设计文档现在就公开、而训练等待硬件的原因。触发条件、试点与预算：[RESOURCES.md](RESOURCES.md)。
 
 欢迎贡献——见 [CONTRIBUTING.md](CONTRIBUTING.md)。
 
@@ -993,6 +1070,43 @@ E3（均衡一致性 vs 13F/COT）、E6（L0传导）、在真实面板上训练
 [38] L. Chen, M. Pelger, J. Zhu, "Deep learning in asset pricing," *Management Science*, 2023.
 [39] J. Sirignano, K. Spiliopoulos, "DGM: a deep learning algorithm for solving partial differential equations," *J. Computational Physics*, 2018.
 [40] R. Cont, J.-P. Bouchaud, "Herd behavior and aggregate fluctuations in financial markets," *Macroeconomic Dynamics*, 2000.
+
+**跨领域世界模型与因子动物园（心路历程——[docs/JOURNEY.md](docs/JOURNEY.md)）**
+[41] P. Wu, A. Escontrela, D. Hafner, P. Abbeel, K. Goldberg, "DayDreamer: world models for physical robot learning," *CoRL*, 2022.
+[42] A. Hu et al., "GAIA-1: a generative world model for autonomous driving," arXiv:2309.17080, 2023.
+[43] J. Bruce et al., "Genie: generative interactive environments," *ICML*, 2024.
+[44] NVIDIA, "Cosmos world foundation model platform for physical AI," arXiv:2501.03575, 2025.
+[45] M. Assran et al., "V-JEPA 2: self-supervised video models enable understanding, prediction and planning," arXiv:2506.09985, 2025.
+[46] J. H. Cochrane, "Presidential address: discount rates," *Journal of Finance*, 2011.
+
+---
+
+## Star 增长曲线
+
+Star 是这个项目的市场验证——公开、带时间戳、斜率无法造假。曲线实时更新：
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hongjin-he/MicroWorld&type=Date)](https://star-history.com/#hongjin-he/MicroWorld&Date)
+
+如果这套框架配得上你的 star，那么杠杆率第二高的贡献是提一个 issue：告诉我们你最想攻击哪一条主张。
+
+---
+
+## 合作与联系
+
+MicroWorld 正在寻找恰好四类对手方：
+
+| 对象 | 我们带来什么 | 我们需要什么 |
+|---|---|---|
+| **学术研究组** | 一季度内可执行、达到 NeurIPS workshop 标准的实验套件（E1–E7） | WRDS 级数据权限；欢迎共同署名 |
+| **量化基金与自营交易台** | Λₜ 预警与拥挤度分解产品线（To-B），外加 E7 结果的优先获取 | 一次试点对话与诚实的对抗性审查 |
+| **算力伙伴** | 一套公开成文、天生为 H200 而设计的第二阶段架构（[设计文档](docs/PHASE2_NEURAL_GAME.md)） | 用于实验 E8–E11 的 H100/H200 机时 |
+| **零售平台与媒体** | 去噪价格研究层（To-C）——2026年7月之后散户真正需要的那个故事 | 分发渠道与产品反馈 |
+
+从**[一页纸](docs/ONE_PAGER.md)**开始；预算与场景在 **[RESOURCES.md](RESOURCES.md)**。
+
+**渠道：** [LinkedIn](https://www.linkedin.com/in/hongjinhe-hkust-edu) · [X](https://x.com/Mr_Abstractor) · [GitHub issues](https://github.com/hongjin-he/MicroWorld/issues)——技术性质疑回复最快。
+
+> *合规声明：本仓库是研究软件。其中任何内容均不构成投资建议、投资组合管理或证券要约。*
 
 ---
 

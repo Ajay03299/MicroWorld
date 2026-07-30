@@ -33,7 +33,7 @@
 [![Instagram](https://img.shields.io/badge/Instagram-mr.abstractor__ust-E4405F?logo=instagram&logoColor=white)](https://www.instagram.com/mr.abstractor_ust/)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-HongJin%20HE-0A66C2?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/hongjinhe-hkust-edu)
 
-**[English](README.md) | [中文文档](README_CN.md)**
+**[English](README.md) | [中文文档](README_CN.md) | [日本語](docs/i18n/README_JA.md) | [한국어](docs/i18n/README_KO.md)**
 
 **Alpha Flow Research · HongJin HE · HKUST / Stanford IHP · July 2026**
 
@@ -89,31 +89,37 @@ python demo/global_demo.py     # reproduce this GIF end-to-end (~2 min, CPU, no 
 
 *— Alpha Flow Research · a Stanford basement · July 2026*
 
+*The longer version — how a world-model skeptic was converted by robots that dream, cars that predict, and a factor zoo that violates first principles — is **[docs/JOURNEY.md](docs/JOURNEY.md)**.*
+
 ---
 
 ## Table of Contents
 
 1. [The Problem Nobody Has Solved](#the-problem-nobody-has-solved)
-2. [Why This Question Is Urgent — Right Now](#why-this-question-is-urgent--right-now)
-3. [What Came Before — And Why It Falls Short](#what-came-before--and-why-it-falls-short)
-4. [Two Kinds of World Model: Type 1 and Type 2](#two-kinds-of-world-model-type-1-and-type-2)
-5. [The Market as a Four-Level Game](#the-market-as-a-four-level-game)
-6. [The E-Game-C Architecture](#the-e-game-c-architecture)
-7. [The Mathematical Framework](#the-mathematical-framework-two-threads-one-theory)
-8. [The Unified Evolution Equation](#the-unified-evolution-equation-theorem-91)
-9. [The Seven Theorems](#the-seven-theorems)
-10. [Reflexivity — Soros, Formalized](#reflexivity--soros-formalized)
-11. [The Agent Taxonomy](#the-agent-taxonomy)
-12. [Connection to the 2026 Fields Medal](#connection-to-the-2026-fields-medal-deng-yu-邓煜)
-13. [What This Makes Possible](#what-this-makes-possible)
-14. [Data Requirements & Research Roadmap](#data-requirements--research-roadmap)
-15. [The 17-Day Notebook Series](#the-17-day-notebook-series)
-16. [Repository Structure](#repository-structure)
-17. [Quick Start](#quick-start)
-18. [Related Work & Positioning](#related-work--positioning)
-19. [Project Roadmap](#project-roadmap)
-20. [References](#references)
-21. [Citation](#citation)
+2. [The First-Principles Bet — Causality over Correlation](#the-first-principles-bet--causality-over-correlation)
+3. [Why This Question Is Urgent — Right Now](#why-this-question-is-urgent--right-now)
+4. [What Came Before — And Why It Falls Short](#what-came-before--and-why-it-falls-short)
+5. [Two Kinds of World Model: Type 1 and Type 2](#two-kinds-of-world-model-type-1-and-type-2)
+6. [The Market as a Four-Level Game](#the-market-as-a-four-level-game)
+7. [The E-Game-C Architecture](#the-e-game-c-architecture)
+8. [The Mathematical Framework](#the-mathematical-framework-two-threads-one-theory)
+9. [The Unified Evolution Equation](#the-unified-evolution-equation-theorem-91)
+10. [The Seven Theorems](#the-seven-theorems)
+11. [Reflexivity — Soros, Formalized](#reflexivity--soros-formalized)
+12. [The Agent Taxonomy](#the-agent-taxonomy)
+13. [Connection to the 2026 Fields Medal](#connection-to-the-2026-fields-medal-deng-yu-邓煜)
+14. [What This Makes Possible](#what-this-makes-possible)
+15. [Two Products, One Engine](#two-products-one-engine)
+16. [Data Requirements & Research Roadmap](#data-requirements--research-roadmap)
+17. [The 17-Day Notebook Series](#the-17-day-notebook-series)
+18. [Repository Structure](#repository-structure)
+19. [Quick Start](#quick-start)
+20. [Related Work & Positioning](#related-work--positioning)
+21. [Project Roadmap — Phase 1 and Phase 2](#project-roadmap--phase-1-and-phase-2)
+22. [Star History](#star-history)
+23. [Partnerships & Contact](#partnerships--contact)
+24. [References](#references)
+25. [Citation](#citation)
 
 ---
 
@@ -130,6 +136,28 @@ The core question this work answers:
 > **Is there a complete mathematical theory — analogous to statistical mechanics or kinetic theory — that describes financial markets as what they actually are: a multi-level, multi-timescale, multi-objective game between heterogeneous agents?**
 
 The answer is yes. This repository presents that theory, and its engineering implementation.
+
+---
+
+## The First-Principles Bet — Causality over Correlation
+
+Every mainstream quant methodology — factor mining, time-series modelling, feature engineering — rests on one unexamined premise: **that historical data will repeat.** It will not. Every backtested pattern is a snapshot of a game whose players have since changed their strategies, partly *because* the pattern was found. That is the Lucas critique with teeth, and it is why the factor zoo decays and deployed models die.
+
+But something *does* repeat. Not the data — the **world that generates the data**: institutions with mandates, regulators with rules, incentives that do not change when a signal is published. History does not repeat its prices; it repeats its *mechanisms*. So the only factors that can carry meaning are the ones derived by going back to the world itself — and this project refuses to model the residue when it can model the generator:
+
+| | Pattern paradigm (factors, TS-ML) | World-model paradigm (this repo) |
+|---|---|---|
+| **Object modeled** | The data the market left behind | The market itself: agents, constraints, equilibrium |
+| **A "factor" is** | A correlation that worked in-sample | A term in an equilibrium condition, with a mechanism attached |
+| **When regimes break** | Silent failure — nothing to explain with | The explanation *is* the model: which agents, which constraint, which coupling |
+| **Deployment** | Erodes the signal (crowding) | Reinforces the signal (equilibria are self-consistent) |
+
+Two consequences follow, and they are this project's identity:
+
+1. **Explainability is the direction of inference, not a feature.** We do not fit prices and hope for meaning; we model the mechanism and *derive* what prices must do. Every output is attributable to named agents, named constraints, and an equilibrium condition you can inspect.
+2. **The model survives contact with the market.** A prediction that is an equilibrium does not evaporate when acted on — being acted on is how equilibria assert themselves.
+
+> **We did not find structure in the data. We modeled the structure that makes the data.** That sentence is the entire difference between this repository and every pattern-mining stack in production today.
 
 ---
 
@@ -753,6 +781,38 @@ When retail investors coordinate (GME, AMC, any future short squeeze), the behav
 
 ---
 
+## Two Products, One Engine
+
+The same E-Game-C core surfaces as two products — one per audience.
+
+### To-C · The denoised equilibrium price (mid/long-horizon)
+
+Theorem 1 says the behavioral noise ν_η cannot be out-traded — by anyone, retail least of all. What a long-horizon investor actually needs is the component *underneath* the noise: the **equilibrium track P^eq** — what the asset is worth once every agent has played its rational strategy — and the divergence **D_t = P_t/P^eq_t − 1**, which answers exactly one question: *are you buying value, or buying crowding?*
+
+[![Denoised equilibrium price — synthetic concept demo](figures/denoised_price_demo.png)](demo/denoised_price_2026.py)
+
+The scenario above is **synthetic** — a concept demo shaped on the July 2026 memory-sector unwind, the month the Philadelphia Semiconductor Index lost 19% (its worst since 2008) while retail flows capitulated at lows that institutions were buying. In the simulation, the signal — divergence above threshold *while the institutional mean field rotates out* — fires **11 trading days (≈2 weeks) before the unwind accelerates**. The real-data version, under the same honesty rules as the 2008 hindcast (walk-forward, no look-ahead), is specified as experiment **[E7](RESOURCES.md)**.
+
+```bash
+python demo/denoised_price_2026.py   # reproduce the figure — synthetic, CPU, no keys
+```
+
+> *Research signal, not advice.* The denoised price is an instrument-level research layer for mid/long-horizon positioning. It is not personalized investment advice, and this repository is not an advisor.
+
+### To-B · Structural risk for institutions
+
+For funds, risk desks, and platforms, the same machinery runs in the other direction — selling not the equilibrium but the **distance from it**:
+
+- **Λₜ regime monitoring** — the 2008/2020-grade basin-exit signal, intraday ([`online/regime_detector.py`](online/regime_detector.py))
+- **Crowding decomposition** — how much of a book's P&L is equilibrium drift vs behavioral wedge, per position
+- **Event-operator scenario analysis** — M&A, policy moves, delistings applied as first-class operators to *today's* state, not as historical analogies
+
+The production loop (Airflow DAG → noise → encoder → MFG → signal → execution) is already scaffolded in [`online/`](online/) with an Alpaca paper-trading stub. This is Horizon 3 of the roadmap.
+
+**One engine, two surfaces:** the retail product is the equilibrium; the institutional product is the deviation from it. Both are outputs of the same solve.
+
+---
+
 ## Data Requirements & Research Roadmap
 
 The mathematics is closed and the code runs end-to-end on synthetic data. The road from prototype to validated instrument is **data** — hundreds of fragmented streams, each feeding a specific term of a specific equation. The complete acquisition plan lives in **[DATA_REQUIREMENTS.md](DATA_REQUIREMENTS.md)**: every source named, every stub located, every cost tiered, and — for the data that exists nowhere — the experiments that create it.
@@ -847,6 +907,8 @@ MicroWorld/
 ├── demo/
 │   ├── run_egamec.py          #   30-second E-Game-C pipeline demo
 │   ├── global_demo.py         #   ★ The animated world-model demo (GIF above)
+│   ├── hindcast_2008.py       #   The 2008 walk-forward hindcast (figure at top)
+│   ├── denoised_price_2026.py #   To-C concept demo: denoised equilibrium price
 │   └── synthetic_market.py    #   Dual-noise synthetic market generator
 │
 ├── scripts/make_figures.py    # Regenerates every README figure from library code
@@ -854,6 +916,8 @@ MicroWorld/
 ├── figures/                   # All SVG diagrams + generated PNGs + demo GIF
 ├── tests/                     # 50 tests, all passing (noise · events · features)
 ├── DATA_REQUIREMENTS.md       # ★ The complete data & experiment roadmap
+├── RESOURCES.md               # ★ Data + compute, priced — the use-of-funds view
+├── docs/                      #   JOURNEY · PHASE2_NEURAL_GAME · ONE_PAGER · i18n
 ├── CITATION.cff               # Citable metadata
 └── .github/workflows/ci.yml   # CI: pytest on 3.11 / 3.12
 ```
@@ -866,6 +930,10 @@ MicroWorld/
 |---|---|---|
 | **Engineering Implementation** (E-Game-C) | [us-equity-world-model](https://github.com/hongjin-he/us-equity-world-model) | Full build manual: data layer, encoder, MFG solver, controller, backtest, deployment |
 | **Mathematical Paper** | [mathmatical-framework-for-world-models-in-quant-finance](https://github.com/hongjin-he/mathmatical-framework-for-world-models-in-quant-finance) | Alpha Flow 02: all proofs, 9 theorems, 25 pages |
+| **The Journey** | [docs/JOURNEY.md](docs/JOURNEY.md) | From world-model skeptic to this architecture — with the robots, cars, and dreams that did the converting |
+| **Phase 2 Design** | [docs/PHASE2_NEURAL_GAME.md](docs/PHASE2_NEURAL_GAME.md) | The Neural Network Game Structure: every neuron an agent-network |
+| **Resources & Use of Funds** | [RESOURCES.md](RESOURCES.md) | Data + compute, priced by scenario; experiments E7–E11 |
+| **One-Pager** | [docs/ONE_PAGER.md](docs/ONE_PAGER.md) | The whole project on one page, for partners and investors |
 
 ---
 
@@ -881,6 +949,9 @@ python demo/global_demo.py
 
 # 2 · The 30-second pipeline demo
 python demo/run_egamec.py
+
+# 2b · The denoised-price concept demo (To-C product line, synthetic)
+python demo/denoised_price_2026.py
 
 # 3 · Regenerate every figure in this README from library code
 python scripts/make_figures.py
@@ -934,7 +1005,7 @@ Where MicroWorld sits relative to each adjacent literature:
 
 ---
 
-## Project Roadmap
+## Project Roadmap — Phase 1 and Phase 2
 
 The project holds itself to a **dual standard**, on purpose:
 
@@ -950,6 +1021,12 @@ E3 (equilibrium consistency vs 13F/COT), E6 (L0 transmission), encoder trained o
 
 **Horizon 3 — the industrial product (P2).**
 Live daily pipeline (Airflow DAG already scaffolded), paper-trading via Alpaca stub, dashboard, and — compute permitting — the Type 2 sandbox with the Type 1 equilibrium as its outer loop.
+
+---
+
+Everything above is **Phase 1 — the game-theoretic core**: mathematical structure standing in for scarce data, and not as a compromise — Theorem 1 proves part of the residual can *only* be explained by mechanism, never estimated away, so structure-first is the theoretically correct regime at today's data access. When the cleaned panel and H200-class compute both exist, the architecture is scheduled to shed its skin:
+
+**Phase 2 — the [Neural Network Game Structure](docs/PHASE2_NEURAL_GAME.md).** A network in which **every neuron is itself a small neural network** — one per institution or retail cohort, with its own objective and information set; regulatory reality imposed as architecture (all agents of a type share their regulator's constraint module); the forward pass *is* the game being played. Whether the environment and the population live in one network or two is assigned to experiment, not taste (E8). Training difficulty roughly squares — which is exactly why the design document is public now and the training waits for the hardware. Triggers, pilots, and budget: [RESOURCES.md](RESOURCES.md).
 
 Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
@@ -1012,6 +1089,43 @@ Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 [38] L. Chen, M. Pelger, J. Zhu, "Deep learning in asset pricing," *Management Science*, 2023.
 [39] J. Sirignano, K. Spiliopoulos, "DGM: a deep learning algorithm for solving partial differential equations," *J. Computational Physics*, 2018.
 [40] R. Cont, J.-P. Bouchaud, "Herd behavior and aggregate fluctuations in financial markets," *Macroeconomic Dynamics*, 2000.
+
+**World models across domains, and the factor zoo (the journey — [docs/JOURNEY.md](docs/JOURNEY.md))**
+[41] P. Wu, A. Escontrela, D. Hafner, P. Abbeel, K. Goldberg, "DayDreamer: world models for physical robot learning," *CoRL*, 2022.
+[42] A. Hu et al., "GAIA-1: a generative world model for autonomous driving," arXiv:2309.17080, 2023.
+[43] J. Bruce et al., "Genie: generative interactive environments," *ICML*, 2024.
+[44] NVIDIA, "Cosmos world foundation model platform for physical AI," arXiv:2501.03575, 2025.
+[45] M. Assran et al., "V-JEPA 2: self-supervised video models enable understanding, prediction and planning," arXiv:2506.09985, 2025.
+[46] J. H. Cochrane, "Presidential address: discount rates," *Journal of Finance*, 2011.
+
+---
+
+## Star History
+
+Stars are this project's market validation — public, timestamped, and unfakeable in slope. The curve updates live:
+
+[![Star History Chart](https://api.star-history.com/svg?repos=hongjin-he/MicroWorld&type=Date)](https://star-history.com/#hongjin-he/MicroWorld&Date)
+
+If the framework earned your star, the next-highest-leverage contribution is one issue: tell us which claim you'd attack first.
+
+---
+
+## Partnerships & Contact
+
+MicroWorld is looking for exactly four kinds of counterparty:
+
+| Who | What we bring | What we need |
+|---|---|---|
+| **Academic research groups** | A NeurIPS-workshop-ready experiment suite (E1–E7) executable in one quarter | WRDS-grade data access; co-authorship welcome |
+| **Quant funds & prop desks** | The Λₜ early-warning and crowding-decomposition line (To-B) — plus first access to E7 results | A pilot conversation and honest adversarial review |
+| **Compute partners** | A publicly specified Phase 2 architecture ([design doc](docs/PHASE2_NEURAL_GAME.md)) that is H200-shaped by construction | H100/H200 hours for experiments E8–E11 |
+| **Retail platforms & media** | The denoised-price research layer (To-C) — a story retail investors actually need after July 2026 | Distribution and product feedback |
+
+Start with the **[one-pager](docs/ONE_PAGER.md)**; budgets and scenarios are in **[RESOURCES.md](RESOURCES.md)**.
+
+**Channels:** [LinkedIn](https://www.linkedin.com/in/hongjinhe-hkust-edu) · [X](https://x.com/Mr_Abstractor) · [GitHub issues](https://github.com/hongjin-he/MicroWorld/issues) — technical objections get the fastest replies.
+
+> *Compliance note: this repository is research software. Nothing in it is investment advice, portfolio management, or an offer of securities.*
 
 ---
 
