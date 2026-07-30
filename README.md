@@ -39,24 +39,23 @@
 
 ---
 
-### September 12, 2008
+### The MVP — predicting the market's *denoised* price
 
 <div align="left">
 
-> *On the Friday before Lehman Brothers filed, the VIX closed at 25.7 — elevated, ordinary. Thirteen months earlier, this model's crisis indicator had already left the stable regime.*
+> *Strip the behavioral noise from a price and what remains is the equilibrium — what the asset is worth once every player has played their strategy. **That track is what we predict.** Not tomorrow's tick: the denoised price, for people who hold for months, not milliseconds.*
 
-[![Hindcast 2008 — walk-forward replay on public data](figures/hindcast_2008.png)](demo/hindcast_2008.py)
+[![Denoised equilibrium price — the MVP demo](figures/denoised_price_demo.png)](demo/denoised_price_2026.py)
 
-**A walk-forward replay of 2005–2009 on public data only** — Ken French daily factors, FRED funding spreads; data vendored in the repo, zero API keys, one command: `python demo/hindcast_2008.py`. At every date the statistic uses only information available that morning:
+**One command, zero API keys:** `python demo/denoised_price_2026.py` — a **synthetic** concept demo shaped on the July 2026 memory-sector unwind (SOX −19%, its worst month since 2008):
 
-- **Zero false alarms** through 2005–2006.
-- **August 10, 2007** — the first trading day after BNP Paribas froze three funds — Λₜ closes above its crisis threshold for the first time in the sample.
-- **August 16, 2007** — Λₜ enters its *sustained* crisis regime: **272 trading days before Lehman**. The market lost **−49%** from that signal to the March 2009 trough.
-- **September 12, 2008**, the last close before Lehman: funding stress re-accelerating (TED 1.13 → 1.36 in five sessions), Λₜ back above equilibrium.
+- **Blue is the product** — the equilibrium track **P^eq** the world model solves for. **Black is the market** — equilibrium *plus* a behavioral wedge that inflates as institutions crowd in and LLM-homogenized retail chases the tape.
+- **The signal** — divergence D_t = P_t/P^eq_t − 1 above threshold *while the institutional mean field is rotating out* — fires **11 trading days (≈2 weeks) before the unwind accelerates**. Retail capitulates at the lows; institutions buy them; the price re-joins its denoised track.
+- **Who it serves:** mid/long-horizon holders (To-C, retail). Deliberately **not** intraday or high-frequency traders — at those horizons behavioral noise dominates, and Theorem 1 (the dual Cramér-Rao bound) proves no volume of data can out-model it. At weeks-to-months horizons the equilibrium component dominates, and that is exactly where this model is built to work. *(A research signal, not investment advice. The real-data version, under the same no-look-ahead rules as our 2008 hindcast, is experiment [E7](RESOURCES.md).)*
 
-*This is a hindcast — a backtest with no look-ahead, not a live forecast. The honest lesson of 2008 is not that the crash was callable to the day. It is that the **exit from stability was visible a full year in advance** to a model watching state-space geometry — funding, correlation, volatility — while price-based dashboards read "ordinary". Λₜ measures distance from the equilibrium basin (Theorem 8.2); 2008 is what a basin exit looks like in real data.*
+**How can this exist at all?** Because nothing under the hood is feature engineering or factor mining. It is a **world model of the market's players**: institutions and retail cohorts as interacting agents in a four-layer, fully connected network — solved *today* as a hierarchical mean-field game (Phase 1: the correct regime while data is scarce), and designed to be trained *tomorrow* as a network whose **every neuron is itself a small neural network** with its own objective (Phase 2: [NNGS](docs/PHASE2_NEURAL_GAME.md), awaiting H200-class compute). Because the price is **derived from the game** rather than fit to the data, every move it predicts is **causally attributable** — which agents, which constraint, which coupling. That is the difference between us and every factor shop: [we did not find structure in the data — we modeled the structure that makes the data ↓](#the-first-principles-bet--causality-over-correlation)
 
-**So how do you build a model that sees this? That question is this entire repository.** ↓
+*The institutional line runs the same engine in reverse — including a 2008 hindcast whose crisis indicator exited the stable regime **272 trading days before Lehman**, on public data with no look-ahead: [Two Products, One Engine](#two-products-one-engine).*
 
 </div>
 
@@ -271,9 +270,9 @@ The term "world model" is used loosely in the literature [5, 6, 7]. For financia
 **[▶ Open the interactive 3D universe](https://hongjin-he.github.io/MicroWorld/)** — drag to rotate, scroll to zoom into the internal structure, and **click any agent** — a market core, an institution type, a named fund, a single trader — for its storyline with numbers. Four narrative modes: 💱 money flows across markets · 🏛 a Fed decision cascading through all four levels · 📱 the retail-AI crisis channel · 🌊 the mean field breathing (FPK). Built with three.js; layout and every story generated by [`scripts/make_network3d.py`](scripts/make_network3d.py).
 
 
-![The four-level coupled market network — ≈5,000 agents, one nested mean-field game](figures/four_level_network.png)
+![The market as a four-layer neural network — every neuron an agent, every edge a strategic coupling](figures/four_level_network.png)
 
-The visualization above is not an abstraction. It describes the actual competitive structure of global financial markets — **four nested levels** of agents, each playing a different kind of game, coupled through shared price processes, capital flows, and information cascades.
+The diagram above is not a metaphor. The market **is** a four-layer neural network — except the neurons are agents: they do not fire, they **decide**. Every edge is a strategic coupling rather than a passive weight; every dashed group shares its regulator's constraint module (the same weight-sharing that regulation imposes in reality); and the whole graph is closed by the price-feedback loop — reflexivity. Phase 1 solves this network as a hierarchical mean-field game. Phase 2 ([NNGS](docs/PHASE2_NEURAL_GAME.md)) trains it directly, one small neural network per neuron — which is why the figure looks the way it does.
 
 There is an ancient Chinese insight: *個人由環境造就* — the individual is shaped by the environment. Our framework makes this precise. The four levels are not isolated: each agent is simultaneously a product of all levels above it and a contributor to all levels above it. The environment is not external noise — it is the aggregate of every other agent's strategy.
 
@@ -787,15 +786,7 @@ The same E-Game-C core surfaces as two products — one per audience.
 
 ### To-C · The denoised equilibrium price (mid/long-horizon)
 
-Theorem 1 says the behavioral noise ν_η cannot be out-traded — by anyone, retail least of all. What a long-horizon investor actually needs is the component *underneath* the noise: the **equilibrium track P^eq** — what the asset is worth once every agent has played its rational strategy — and the divergence **D_t = P_t/P^eq_t − 1**, which answers exactly one question: *are you buying value, or buying crowding?*
-
-[![Denoised equilibrium price — synthetic concept demo](figures/denoised_price_demo.png)](demo/denoised_price_2026.py)
-
-The scenario above is **synthetic** — a concept demo shaped on the July 2026 memory-sector unwind, the month the Philadelphia Semiconductor Index lost 19% (its worst since 2008) while retail flows capitulated at lows that institutions were buying. In the simulation, the signal — divergence above threshold *while the institutional mean field rotates out* — fires **11 trading days (≈2 weeks) before the unwind accelerates**. The real-data version, under the same honesty rules as the 2008 hindcast (walk-forward, no look-ahead), is specified as experiment **[E7](RESOURCES.md)**.
-
-```bash
-python demo/denoised_price_2026.py   # reproduce the figure — synthetic, CPU, no keys
-```
+**This is the MVP at the top of this README.** Theorem 1 says the behavioral noise ν_η cannot be out-traded — by anyone, retail least of all. What a long-horizon investor actually needs is the component *underneath* the noise: the **equilibrium track P^eq** — what the asset is worth once every agent has played its rational strategy — and the divergence **D_t = P_t/P^eq_t − 1**, which answers exactly one question: *are you buying value, or buying crowding?* Concept demo: [`demo/denoised_price_2026.py`](demo/denoised_price_2026.py) (synthetic, labeled as such). Real-data validation: experiment **[E7](RESOURCES.md)**.
 
 > *Research signal, not advice.* The denoised price is an instrument-level research layer for mid/long-horizon positioning. It is not personalized investment advice, and this repository is not an advisor.
 
@@ -808,6 +799,21 @@ For funds, risk desks, and platforms, the same machinery runs in the other direc
 - **Event-operator scenario analysis** — M&A, policy moves, delistings applied as first-class operators to *today's* state, not as historical analogies
 
 The production loop (Airflow DAG → noise → encoder → MFG → signal → execution) is already scaffolded in [`online/`](online/) with an Alpaca paper-trading stub. This is Horizon 3 of the roadmap.
+
+#### The receipts — 2008, replayed with no look-ahead
+
+> *On the Friday before Lehman Brothers filed, the VIX closed at 25.7 — elevated, ordinary. Thirteen months earlier, this model's crisis indicator had already left the stable regime.*
+
+[![Hindcast 2008 — walk-forward replay on public data](figures/hindcast_2008.png)](demo/hindcast_2008.py)
+
+**A walk-forward replay of 2005–2009 on public data only** — Ken French daily factors, FRED funding spreads; data vendored in the repo, zero API keys, one command: `python demo/hindcast_2008.py`. At every date the statistic uses only information available that morning:
+
+- **Zero false alarms** through 2005–2006.
+- **August 10, 2007** — the first trading day after BNP Paribas froze three funds — Λₜ closes above its crisis threshold for the first time in the sample.
+- **August 16, 2007** — Λₜ enters its *sustained* crisis regime: **272 trading days before Lehman**. The market lost **−49%** from that signal to the March 2009 trough.
+- **September 12, 2008**, the last close before Lehman: funding stress re-accelerating (TED 1.13 → 1.36 in five sessions), Λₜ back above equilibrium.
+
+*This is a hindcast — a backtest with no look-ahead, not a live forecast. The honest lesson of 2008 is not that the crash was callable to the day. It is that the **exit from stability was visible a full year in advance** to a model watching state-space geometry — funding, correlation, volatility — while price-based dashboards read "ordinary". Λₜ measures distance from the equilibrium basin (Theorem 8.2); 2008 is what a basin exit looks like in real data.*
 
 **One engine, two surfaces:** the retail product is the equilibrium; the institutional product is the deviation from it. Both are outputs of the same solve.
 
