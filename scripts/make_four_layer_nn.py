@@ -39,7 +39,7 @@ LAYER_LABEL = [
     "L2 · institutions\n(within-type Nash)",
     "L3 · desks & individuals\n(intra-institution game)",
 ]
-l0_names = ["US equities", "rates", "FX", "commodities"]
+l0_names = ["US equities", "US Treasuries", "US credit", "US money mkts"]
 l1_specs = [("central banks", C_CB), ("commercial banks", C_BANK),
             ("quant funds", C_QUANT), ("asset managers", C_AM),
             ("market makers", C_MM), ("retail cohorts", C_RETAIL)]

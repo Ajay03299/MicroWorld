@@ -117,7 +117,7 @@ python demo/global_demo.py     # reproduce this GIF end-to-end (~2 min, CPU, no 
 3. [Why This Question Is Urgent — Right Now](#why-this-question-is-urgent--right-now)
 4. [What Came Before — And Why It Falls Short](#what-came-before--and-why-it-falls-short)
 5. [Two Kinds of World Model: Type 1 and Type 2](#two-kinds-of-world-model-type-1-and-type-2)
-6. [The Market as a Four-Level Game](#the-market-as-a-four-level-game)
+6. [The Market as a Layered Game — Plumbing and Projection](#the-market-as-a-layered-game--plumbing-and-projection)
 7. [The E-Game-C Architecture](#the-e-game-c-architecture)
 8. [The Mathematical Framework](#the-mathematical-framework-two-threads-one-theory)
 9. [The Unified Evolution Equation](#the-unified-evolution-equation-theorem-91)
@@ -281,7 +281,7 @@ The term "world model" is used loosely in the literature [5, 6, 7]. For financia
 
 ---
 
-## The Market as a Four-Level Game
+## The Market as a Layered Game — Plumbing and Projection
 
 [![The Four-Level Universe — interactive 3D: rotate, zoom, click any of ~3,700 agents for its storyline](figures/network3d_preview.png)](https://hongjin-he.github.io/MicroWorld/)
 
@@ -292,7 +292,32 @@ The term "world model" is used loosely in the literature [5, 6, 7]. For financia
 
 The diagram above is not a metaphor. The market **is** a four-layer neural network — except the neurons are agents: they do not fire, they **decide**. Every edge is a strategic coupling rather than a passive weight; every dashed group shares its regulator's constraint module (the same weight-sharing that regulation imposes in reality); and the whole graph is closed by the price-feedback loop — reflexivity. Phase 1 solves this network as a hierarchical mean-field game. Phase 2 ([NNGS](docs/PHASE2_NEURAL_GAME.md)) trains it directly, one small neural network per neuron — which is why the figure looks the way it does.
 
-There is an ancient Chinese insight: *個人由環境造就* — the individual is shaped by the environment. Our framework makes this precise. The four levels are not isolated: each agent is simultaneously a product of all levels above it and a contributor to all levels above it. The environment is not external noise — it is the aggregate of every other agent's strategy.
+There is an ancient Chinese insight: *個人由環境造就* — the individual is shaped by the environment. Our framework makes this precise. The layers are not isolated: each agent is simultaneously a product of the layers above it and a contributor to them. The environment is not external noise — it is the aggregate of every other agent's strategy.
+
+### The real plumbing: seven layers of capital flow, one parallel layer, two outer rings
+
+A market's roles are layered by **the direction money flows** — not by four convenient tiers. The complete taxonomy is **[docs/MARKET_LAYERS.md](docs/MARKET_LAYERS.md)**; the skeleton:
+
+| Layer | Who | What they decide |
+|---|---|---|
+| **0** · Surplus sector | retail, HNWIs, corporate treasuries, fiscal surpluses | where savings enter |
+| **1** · Asset owners | pensions (CalPERS, GPIF), insurers, SWFs, endowments | liability-driven mandates |
+| **2** · Allocation & conduits | consultants/OCIO, private banks, fund platforms, the bank deposit→loan system | who manages the money (places no orders) |
+| **3** · Asset managers | mutual/index/ETF, hedge funds, private markets | positions — the alpha-competition layer |
+| **4** · Sell side & intermediaries | investment banks, prime brokers, dealers | access, leverage, spread |
+| **5** · Infrastructure | exchanges, CCPs/CSDs, custodians, payment rails | where money and securities actually settle |
+| **6** · Issuers | corporates, the Treasury, securitization SPVs | the demand for capital |
+| **∥** · Parallel layer | prop market makers & HFT (Jane Street, Citadel Securities, Virtu…) | liquidity between L4–L5, own capital only |
+| **◎1** · Information ring | index providers, rating agencies, data vendors, media | steer flows without touching money |
+| **◎2** · Rules ring | central banks, SEC/CFTC/Fed, FDIC, BIS | constraints and last resort |
+
+> Savings (0) → institutionalization (1) → allocation (2) → positions (3) → access (4) → settlement (5) → issuers (6) → the real economy — and returns flow back along the same path.
+
+Two structural facts the model exploits directly: **outer ring 2 is the constraint architecture** — every agent type's shared regulatory projection, the weight sharing drawn in the figure above — and **outer ring 1 is the information architecture** — the filtrations and flow-steering operators (an index inclusion is a Mode-I event on μ). And layers are functional, not corporate: JPMorgan lives at layers 2, 3, 4, and 5 simultaneously; retail sits at 0 and 3; the central bank at 1 and ◎2.
+
+### The projection the mathematics solves
+
+Phase 1 does not attack the ten-role graph head-on — it solves its **game projection**: four nested levels of strategic aggregation (the hierarchy of Theorem 7.4), coarse-graining the plumbing as *game-L0* ≈ aggregate cross-market flow over the whole chain, *game-L1* ≈ the strategic classes drawn from layers 1–4 plus the parallel layer, *game-L2* ≈ individual institutions, *game-L3* ≈ desks and individuals. **Phase 2 ([NNGS](docs/PHASE2_NEURAL_GAME.md)) drops the projection and ingests the full layered graph directly.** The four game levels below are that projection:
 
 ### Level 0 — Cross-Market Capital Flow Game
 
