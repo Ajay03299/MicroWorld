@@ -53,15 +53,17 @@
 - **The signal** — divergence D_t = P_t/P^eq_t − 1 above threshold *while the institutional mean field is rotating out* — fires **11 trading days (≈2 weeks) before the unwind accelerates**. Retail capitulates at the lows; institutions buy them; the price re-joins its denoised track.
 - **Who it serves:** mid/long-horizon holders (To-C, retail). Deliberately **not** intraday or high-frequency traders — at those horizons behavioral noise dominates, and Theorem 1 (the dual Cramér-Rao bound) proves no volume of data can out-model it. At weeks-to-months horizons the equilibrium component dominates, and that is exactly where this model is built to work. *(A research signal, not investment advice. The real-data version, under the same no-look-ahead rules as our 2008 hindcast, is experiment [E7](RESOURCES.md).)*
 
-**The real-data check — July 2026, replayed on real prices.** We froze the 2008 recipe — weights, threshold, sustain rule unchanged, one disclosed adaptation (funding stress → crowding extension) — and replayed the memory basket (SK Hynix, Samsung, Micron, Western Digital, Seagate, SanDisk; daily closes vendored in the repo, keyless) walk-forward through this month's unwind: `python demo/hindcast_memory_2026.py`.
-
-[![Memory 2026 hindcast — the frozen 2008 recipe on real data](figures/hindcast_memory_2026.png)](demo/hindcast_memory_2026.py)
+**The real-data check — July 2026, replayed on real prices.** We froze the 2008 recipe — weights, threshold, sustain rule unchanged, one disclosed adaptation (funding stress → crowding extension) — and replayed the memory basket (SK Hynix, Samsung, Micron, Western Digital, Seagate, SanDisk; daily closes vendored in the repo, keyless) walk-forward through this month's unwind: `python demo/hindcast_memory_2026.py` (figure with [the receipts, below](#two-products-one-engine)).
 
 - **Three years, zero alarms** — through the 2022 memory bear and the 2023–25 recovery, Λₜ never crossed its threshold once.
 - **The first alarm of the entire sample: October 22, 2025** — the AI-memory mania itself. The sector left its stable regime **232 trading days before July 2026 delivered its worst month since 2008** (SK Hynix −55% from its peak, in the vendored data).
 - **And the honest other half:** after the alarm, the basket rose another **+446%** before it broke. Basin-exit detection is not crash timing — an unstable crowding regime can keep inflating for months. *When* it breaks is governed by **who is holding the wedge up and when they rotate out** — the institutional field κ. That κ-rotation condition is exactly the second half of the MVP signal in the synthetic demo above, and reconstructing it from real 13F/COT positioning is experiment [E7](RESOURCES.md).
 
 No "we predicted it" claim — this is a hindcast computed after the event, and the figure says so on its face. What it demonstrates is the division of labor inside one world model: **Λₜ tells you the regime is unstable; the divergence D_t with κ-rotation tells you when the instability resolves.** The synthetic demo shows the second half working; E7 makes it real.
+
+[![How the network infers the unwind — agents as neurons, principal couplings, mechanism](figures/agent_game_inference.png)](scripts/make_agent_game_figure.py)
+
+*How the prediction is made, in one figure — **(a)** the fully connected agent network: every neuron an agent, and the five highlighted edges the **principal couplings** — the PCA-like handful of interactions that carry this episode; **(b)** their loadings; **(c)** the unwind mechanism those couplings generate: information reaches the informed first (w₁), institutions de-crowd (w₂), momentum pulls retail in (w₃, w₄), market-maker inventory sets the gap risk (w₅), and the wedge collapses onto the equilibrium. Agent-game modeling, a new use of neural networks, and the network's structure — one picture.*
 
 **What makes this possible? Three breaks with everything else on the market — they are the soul of this MVP:**
 
@@ -830,6 +832,10 @@ The production loop (Airflow DAG → noise → encoder → MFG → signal → ex
 - **September 12, 2008**, the last close before Lehman: funding stress re-accelerating (TED 1.13 → 1.36 in five sessions), Λₜ back above equilibrium.
 
 *This is a hindcast — a backtest with no look-ahead, not a live forecast. The honest lesson of 2008 is not that the crash was callable to the day. It is that the **exit from stability was visible a full year in advance** to a model watching state-space geometry — funding, correlation, volatility — while price-based dashboards read "ordinary". Λₜ measures distance from the equilibrium basin (Theorem 8.2); 2008 is what a basin exit looks like in real data.*
+
+*And the same recipe, frozen, replayed on July 2026 (below): the first alarm of a three-year sample on **October 22, 2025** — 232 trading days before the capitulation — with the honest +446% rally in between. Full reading in [the MVP's real-data check](#the-mvp--predicting-the-markets-denoised-price).*
+
+[![Memory 2026 hindcast — the frozen 2008 recipe on real data](figures/hindcast_memory_2026.png)](demo/hindcast_memory_2026.py)
 
 **One engine, two surfaces:** the retail product is the equilibrium; the institutional product is the deviation from it. Both are outputs of the same solve.
 
