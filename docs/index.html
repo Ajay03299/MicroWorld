@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>MicroWorld · The Four-Level Universe</title>
+<title>MicroWorld · The Layered US Market — 2026-05-01</title>
 <style>
   :root { --ink:#111827; --mute:#6B7280; --blue:#2563EB; --card:#FFFFFF; }
   html,body { margin:0; height:100%; background:#FBFBFC; font-family:-apple-system,"SF Pro Text","Segoe UI",Roboto,"PingFang SC",sans-serif; overflow:hidden; }
@@ -14,29 +14,29 @@
   #title p  { margin:4px 0 0; font-size:12px; color:var(--mute); }
   #brand { top:22px; right:26px; text-align:right; font-size:13px; }
   #brand a { color:var(--blue); text-decoration:none; font-weight:600; }
-  #stories { top:78px; left:50%; transform:translateX(-50%); display:flex; gap:8px; }
+  #stories { top:78px; left:50%; transform:translateX(-50%); display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
   .pill { border:1px solid #E5E7EB; background:#fff; color:var(--ink); font-size:12.5px;
           padding:7px 14px; border-radius:999px; cursor:pointer; transition:.15s;
           box-shadow:0 1px 2px rgba(0,0,0,.04); }
   .pill:hover { border-color:var(--blue); color:var(--blue); }
   .pill.on { background:var(--blue); color:#fff; border-color:var(--blue); }
-  #card { top:120px; right:26px; width:330px; background:var(--card); border:1px solid #E9EBEF;
+  #card { top:120px; right:26px; width:340px; background:var(--card); border:1px solid #E9EBEF;
           border-radius:14px; box-shadow:0 10px 30px rgba(17,24,39,.10); padding:16px 18px;
-          display:none; }
+          display:none; max-height:70vh; overflow:auto; }
   #card .chip { float:right; font-size:10.5px; font-weight:700; color:#fff; background:var(--blue);
                 border-radius:999px; padding:3px 9px; }
-  #card h2 { margin:0 0 8px; font-size:15.5px; color:var(--ink); padding-right:44px;}
+  #card h2 { margin:0 0 8px; font-size:15px; color:var(--ink); padding-right:44px;}
   #card .ln { font-size:12.5px; color:#374151; margin:7px 0; line-height:1.45;
               border-left:2px solid #E5E7EB; padding-left:9px; }
   #card .x { position:absolute; top:10px; right:12px; cursor:pointer; color:#9CA3AF;
              font-size:16px; border:none; background:none; }
   #legend { bottom:22px; left:26px; background:#fff; border:1px solid #E9EBEF; border-radius:12px;
-            padding:12px 14px; font-size:11.5px; color:var(--ink);
-            box-shadow:0 4px 14px rgba(17,24,39,.06); }
-  #legend div { margin:4px 0; display:flex; align-items:center; gap:8px; }
-  .dot { width:9px; height:9px; border-radius:50%; display:inline-block; }
-  #foot { bottom:22px; right:26px; font-size:10.5px; color:#9CA3AF; text-align:right; max-width:380px;}
-  #hint { bottom:80px; left:50%; transform:translateX(-50%); font-size:12px; color:var(--mute);
+            padding:10px 14px; font-size:11px; color:var(--ink);
+            box-shadow:0 4px 14px rgba(17,24,39,.06); columns:2; column-gap:16px; }
+  #legend div { margin:3px 0; display:flex; align-items:center; gap:7px; break-inside:avoid;}
+  .dot { width:9px; height:9px; border-radius:50%; display:inline-block; flex:none;}
+  #foot { bottom:22px; right:26px; font-size:10.5px; color:#9CA3AF; text-align:right; max-width:400px;}
+  #hint { bottom:96px; left:50%; transform:translateX(-50%); font-size:12px; color:var(--mute);
           background:#ffffffd9; border-radius:999px; padding:6px 16px; border:1px solid #EEE; }
 </style>
 </head>
@@ -44,17 +44,18 @@
 <canvas id="c"></canvas>
 
 <div class="panel" id="title">
-  <h1>The Four-Level Universe</h1>
-  <p>≈3,700 agents · one nested mean-field game · drag to rotate · scroll to zoom · click any agent</p>
+  <h1>The Layered US Market</h1>
+  <p>snapshot 2026-05-01 · capital-flow layers 0–6 + prop/HFT + two outer rings ·
+     click any <b>node</b> or <b>edge</b> for its May-1 reading</p>
 </div>
 <div class="panel" id="brand"><a href="https://github.com/hongjin-he/MicroWorld">MicroWorld ↗</a><br>
   <span style="color:#9CA3AF;font-size:11px">Alpha Flow Research</span></div>
 
 <div class="panel" id="stories">
-  <button class="pill" data-s="flows">💱 Money flows</button>
-  <button class="pill" data-s="policy">🏛 Policy cascade</button>
-  <button class="pill" data-s="retail">📱 Retail crisis</button>
-  <button class="pill" data-s="osc">🌊 Market oscillation</button>
+  <button class="pill" data-s="chain">💰 Capital chain</button>
+  <button class="pill" data-s="thread">🧠 Memory-crowding thread</button>
+  <button class="pill" data-s="retail">📱 Retail field</button>
+  <button class="pill" data-s="rings">🏛 Rings: rules &amp; information</button>
 </div>
 
 <div class="panel" id="card">
@@ -65,16 +66,24 @@
 </div>
 
 <div class="panel" id="legend">
-  <div><span class="dot" style="background:#0B1F3A"></span> L0 · markets &amp; central banks</div>
-  <div><span class="dot" style="background:#2563EB"></span> L1 · institution types</div>
-  <div><span class="dot" style="background:#F97316"></span> L2 · institutions</div>
-  <div><span class="dot" style="background:#9AA1AC"></span> L3 · individuals &amp; retail</div>
-  <div><span class="dot" style="background:#E11D48"></span> event cascade (down)</div>
-  <div><span class="dot" style="background:#D97706"></span> stress signal (up)</div>
+  <div><span class="dot" style="background:#0B1F3A"></span> L0 surplus sector</div>
+  <div><span class="dot" style="background:#1D4ED8"></span> L1 asset owners</div>
+  <div><span class="dot" style="background:#60A5FA"></span> L2 allocation</div>
+  <div><span class="dot" style="background:#2563EB"></span> L3 asset managers</div>
+  <div><span class="dot" style="background:#7C3AED"></span> L4 sell side</div>
+  <div><span class="dot" style="background:#F97316"></span> L5 infrastructure</div>
+  <div><span class="dot" style="background:#059669"></span> L6 issuers</div>
+  <div><span class="dot" style="background:#D97706"></span> ∥ prop / HFT</div>
+  <div><span class="dot" style="background:#DB2777"></span> ◎1 information ring</div>
+  <div><span class="dot" style="background:#DC2626"></span> ◎2 rules ring</div>
+  <div><span class="dot" style="background:#9AA1AC"></span> retail field (cloud)</div>
+  <div><span class="dot" style="background:#D97706;border-radius:2px;height:3px"></span> the memory thread</div>
 </div>
-<div class="panel" id="hint">auto-rotating — drag to take control</div>
-<div class="panel" id="foot">Figures are illustrative orders of magnitude.
-  Layout &amp; stories generated by <code>scripts/make_network3d.py</code>.</div>
+<div class="panel" id="hint">auto-rotating — drag to take control · every node and edge is clickable</div>
+<div class="panel" id="foot">All node &amp; edge readings are <b>model-inferred snapshots as of 2026-05-01</b>,
+  generated from public role structure + the repo's own replay — illustrative model output,
+  not statements of fact about the named institutions.
+  Generated by <code>scripts/make_network3d.py</code>.</div>
 
 <script src="data.js"></script>
 <script type="importmap">
@@ -89,21 +98,22 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
 const D = window.MW_DATA;
 const N = D.pos.length;
-const COL = { 0:0x0B1F3A, 1:0x2563EB, 2:0xF97316, 3:0x9AA1AC };
-const SCALE = 3.2;
+const COL = { 0:0x0B1F3A, 1:0x1D4ED8, 2:0x60A5FA, 3:0x2563EB, 4:0x7C3AED,
+              5:0xF97316, 6:0x059669, 7:0xD97706, 8:0xDB2777, 9:0xDC2626 };
+const SCALE = 1.5;
 
 const canvas = document.getElementById("c");
 const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
 renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0xFBFBFC);
-scene.fog = new THREE.Fog(0xFBFBFC, 7.5, 15);
+scene.fog = new THREE.Fog(0xFBFBFC, 10, 22);
 const camera = new THREE.PerspectiveCamera(46, 1, .1, 100);
-camera.position.set(5.4, 2.6, 5.4);
+camera.position.set(6.8, 3.2, 6.8);
 const controls = new OrbitControls(camera, canvas);
 controls.enableDamping = true; controls.dampingFactor = .06;
-controls.autoRotate = true; controls.autoRotateSpeed = .55;
-controls.minDistance = 1.2; controls.maxDistance = 11;
+controls.autoRotate = true; controls.autoRotateSpeed = .5;
+controls.minDistance = 1.5; controls.maxDistance = 16;
 controls.addEventListener("start", () => {
   controls.autoRotate = false;
   document.getElementById("hint").style.display = "none";
@@ -114,7 +124,7 @@ scene.add(dl);
 
 const pos = i => new THREE.Vector3(...D.pos[i]).multiplyScalar(SCALE);
 
-// ── edges ─────────────────────────────────────────────────────────────────────
+// ── edges (clickable) ─────────────────────────────────────────────────────────
 function segGeo(pairs) {
   const g = new THREE.BufferGeometry();
   const a = new Float32Array(pairs.length * 6);
@@ -124,153 +134,150 @@ function segGeo(pairs) {
   g.setAttribute("position", new THREE.BufferAttribute(a, 3));
   return g;
 }
-const grayMat = new THREE.LineBasicMaterial({ color:0xC9CDD4, transparent:true, opacity:.30 });
+const grayMat = new THREE.LineBasicMaterial({ color:0x9AA1AC, transparent:true, opacity:.42 });
 const gray = new THREE.LineSegments(segGeo(D.edges), grayMat); scene.add(gray);
-const redMat = new THREE.LineBasicMaterial({ color:0xE11D48, transparent:true, opacity:.45 });
-const red = new THREE.LineSegments(segGeo(D.red), redMat); scene.add(red);
-const orgMat = new THREE.LineBasicMaterial({ color:0xD97706, transparent:true, opacity:.95 });
-const org = new THREE.LineSegments(segGeo(D.orange), orgMat); scene.add(org);
 
-// L0 capital-flow arcs
-const flowGroup = new THREE.Group(); scene.add(flowGroup);
-D.flows.forEach(([i, j]) => {
-  const a = pos(i), b = pos(j);
-  const mid = a.clone().add(b).multiplyScalar(.5).multiplyScalar(.25);
-  const curve = new THREE.QuadraticBezierCurve3(a, mid, b);
-  const g = new THREE.BufferGeometry().setFromPoints(curve.getPoints(36));
-  flowGroup.add(new THREE.Line(g,
-    new THREE.LineBasicMaterial({ color:0x0B1F3A, transparent:true, opacity:.55 })));
-});
+const threadPairs = D.thread.map(k => D.edges[k]);
+const orgMat = new THREE.LineBasicMaterial({ color:0xD97706, transparent:true, opacity:.95, linewidth:2 });
+const org = new THREE.LineSegments(segGeo(threadPairs), orgMat); scene.add(org);
+
+const redMat = new THREE.LineBasicMaterial({ color:0xDC2626, transparent:true, opacity:.35 });
+const red = new THREE.LineSegments(segGeo(D.red), redMat); scene.add(red);
 
 // ── nodes ─────────────────────────────────────────────────────────────────────
-const byLvl = {0:[],1:[],2:[],3:[]};
-for (let i=0;i<N;i++) byLvl[D.lvl[i]].push(i);
-
-const meshes = [];   // clickable instanced meshes for L0/L1/L2
-function makeInstanced(lvl, geoR) {
-  const idx = byLvl[lvl];
-  const geo = new THREE.SphereGeometry(geoR, 18, 14);
-  const mat = new THREE.MeshLambertMaterial({ color: COL[lvl] });
+const byLvl = {};
+for (let i=0;i<N;i++) (byLvl[D.lvl[i]] ??= []).push(i);
+const meshes = [];
+for (const l of Object.keys(byLvl)) {
+  const idx = byLvl[l];
+  const geo = new THREE.SphereGeometry(.05, 18, 14);
+  const mat = new THREE.MeshLambertMaterial({ color: COL[l] });
   const m = new THREE.InstancedMesh(geo, mat, idx.length);
   const M = new THREE.Matrix4();
   idx.forEach((ni, k) => {
-    const s = D.size[ni] * SCALE / geoR;
+    const s = D.size[ni] * SCALE / .05 * 2.4;
     M.compose(pos(ni), new THREE.Quaternion(), new THREE.Vector3(s, s, s));
     m.setMatrixAt(k, M);
   });
-  m.userData = { lvl, idx };
+  m.userData = { idx };
   scene.add(m); meshes.push(m);
-  return m;
 }
-makeInstanced(0, .05); makeInstanced(1, .05); makeInstanced(2, .05);
 
-// L3 point cloud
-const l3idx = byLvl[3];
+// retail field cloud
 const pGeo = new THREE.BufferGeometry();
-const pArr = new Float32Array(l3idx.length * 3);
-l3idx.forEach((ni, k) => pos(ni).toArray(pArr, k*3));
+const pArr = new Float32Array(D.cloud.length * 3);
+D.cloud.forEach((p, k) => new THREE.Vector3(...p).multiplyScalar(SCALE).toArray(pArr, k*3));
 pGeo.setAttribute("position", new THREE.BufferAttribute(pArr, 3));
-const pMat = new THREE.PointsMaterial({ color:0x9AA1AC, size:.028, sizeAttenuation:true,
-                                        transparent:true, opacity:.85 });
+const pMat = new THREE.PointsMaterial({ color:0x9AA1AC, size:.05, sizeAttenuation:true,
+                                        transparent:true, opacity:.8 });
 const cloud = new THREE.Points(pGeo, pMat); scene.add(cloud);
-cloud.userData = { idx: l3idx };
-const pBase = pArr.slice();          // for the oscillation story
+const pBase = pArr.slice();
 
-// market name sprites
-function label(text, p, scl=0.42, color="#0B1F3A") {
-  const cv = document.createElement("canvas"); cv.width = 256; cv.height = 96;
+// layer labels
+function label(text, p, scl=1.05, color="#0B1F3A") {
+  const cv = document.createElement("canvas"); cv.width = 512; cv.height = 84;
   const ctx = cv.getContext("2d");
-  ctx.font = "700 56px -apple-system, Segoe UI, sans-serif";
+  ctx.font = "700 40px -apple-system, Segoe UI, sans-serif";
   ctx.textAlign="center"; ctx.fillStyle = color;
-  ctx.strokeStyle = "rgba(251,251,252,.9)"; ctx.lineWidth = 10;
-  ctx.strokeText(text, 128, 62); ctx.fillText(text, 128, 62);
+  ctx.strokeStyle = "rgba(251,251,252,.92)"; ctx.lineWidth = 9;
+  ctx.strokeText(text, 256, 54); ctx.fillText(text, 256, 54);
   const sp = new THREE.Sprite(new THREE.SpriteMaterial(
     { map: new THREE.CanvasTexture(cv), depthTest:false, transparent:true }));
-  sp.position.copy(p).multiplyScalar(1.5); sp.scale.set(scl, scl*96/256, 1);
+  sp.position.copy(p); sp.scale.set(scl, scl*84/512, 1);
   scene.add(sp);
 }
-D.l0.forEach(i => label(D.story[i].t.split(" ")[0], pos(i)));
+D.layers.forEach(([l, x, chip, name]) => {
+  label(`${chip} · ${name}`, new THREE.Vector3(x*SCALE, -1.45*SCALE, 0));
+});
+label("∥ · prop / HFT", new THREE.Vector3(1.35*SCALE, 2.35*SCALE, 0), 1.0, "#D97706");
+label("◎1 · information ring", new THREE.Vector3(0, 2.0*SCALE, -1.7*SCALE), 1.1, "#DB2777");
+label("◎2 · rules ring", new THREE.Vector3(0, -2.0*SCALE, -1.7*SCALE), 1.1, "#DC2626");
 
-// ── interaction: hover + click ────────────────────────────────────────────────
+// ── interaction: nodes first, then edges ──────────────────────────────────────
 const ray = new THREE.Raycaster();
-ray.params.Points = { threshold: .045 };
+ray.params.Points = { threshold: .06 };
+ray.params.Line = { threshold: .045 };
 const mouse = new THREE.Vector2();
-let hoverHit = null;
 
 function pick(ev) {
   const r = canvas.getBoundingClientRect();
   mouse.x = ((ev.clientX - r.left) / r.width) * 2 - 1;
   mouse.y = -((ev.clientY - r.top) / r.height) * 2 + 1;
   ray.setFromCamera(mouse, camera);
-  const hits = ray.intersectObjects([...meshes, cloud], false);
-  if (!hits.length) return null;
-  const h = hits[0];
-  if (h.object === cloud) return { node: cloud.userData.idx[h.index], l3:true };
-  return { node: h.object.userData.idx[h.instanceId], l3:false };
+  const nh = ray.intersectObjects([...meshes, cloud], false);
+  if (nh.length) {
+    const h = nh[0];
+    if (h.object === cloud) return { kind:"cloud", id:h.index };
+    return { kind:"node", id:h.object.userData.idx[h.instanceId] };
+  }
+  const eh = ray.intersectObjects([org, gray], false);
+  if (eh.length) {
+    const h = eh[0];
+    const seg = Math.floor(h.index / 2);
+    if (h.object === org) return { kind:"edge", id:D.thread[seg] };
+    return { kind:"edge", id:seg };
+  }
+  return null;
 }
 canvas.addEventListener("pointermove", ev => {
-  hoverHit = pick(ev);
-  canvas.style.cursor = hoverHit ? "pointer" : "grab";
+  canvas.style.cursor = pick(ev) ? "pointer" : "grab";
 });
 canvas.addEventListener("click", ev => {
   const hit = pick(ev);
-  if (hit) showNode(hit.node);
+  if (!hit) return;
+  if (hit.kind === "node") showStory(D.story[hit.id]);
+  else if (hit.kind === "edge") showStory(D.estory[hit.id]);
+  else showStory(cloudStory(hit.id));
 });
 
 function mulberry(a){return function(){a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);
   t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
-function showNode(i) {
-  const card = document.getElementById("card");
-  const chip = document.getElementById("cardChip");
-  const ttl = document.getElementById("cardTitle");
-  const body = document.getElementById("cardBody");
-  let s = D.story[i];
-  if (!s) {                                     // procedural L3 story
-    const r = mulberry(i);
-    const retail = r() < .45;
-    s = retail
-      ? { t:`Retail agent #${i}`, c:"L3",
-          l:[ D.retail[Math.floor(r()*D.retail.length)],
-              "Follows the same 3 AI assistants as 500M others",
-              "→ part of the increasingly legible μ_retail (Day 16)",
-              "SNR: LOW · public news arrives hours late" ] }
-      : { t:`Trader #${i}`, c:"L3",
-          l:[ D.desks[Math.floor(r()*D.desks.length)],
-              "Nash: competes with sibling desks for capital",
-              "Cooperates on firm survival (mixed MFC/MFG)",
-              "dyᵢ = b₃(y, μ³, x, u) dt + σ₃ dW" ] };
-  }
-  chip.textContent = s.c; ttl.textContent = s.t;
-  body.innerHTML = s.l.map(x => `<div class="ln">${x}</div>`).join("");
-  card.style.display = "block";
+const WATCH = ["Micron","SanDisk","Western Digital","NVIDIA","the whole memory basket"];
+const WHY = ["'it keeps going up'","an AI assistant's summary","a subreddit consensus","a friend's screenshot"];
+function cloudStory(i) {
+  const r = mulberry(i);
+  return { t:`Retail account #${1000+i}`, c:"R",
+    l:["Self-directed retail · part of the legible crowd (Day 16)",
+       "Asks the same 3 AI assistants as 500M others",
+       `May 1 read: watchlist = ${WATCH[Math.floor(r()*WATCH.length)]} · entry reason = ${WHY[Math.floor(r()*WHY.length)]}`,
+       "SNR: LOW — public news arrives hours late; holds the wedge up after institutions stop adding",
+       "— model-inferred snapshot · 2026-05-01 · illustrative"] };
+}
+function showStory(s) {
+  document.getElementById("cardChip").textContent = s.c;
+  document.getElementById("cardTitle").textContent = s.t;
+  document.getElementById("cardBody").innerHTML =
+    s.l.map(x => `<div class="ln">${x}</div>`).join("");
+  document.getElementById("card").style.display = "block";
 }
 window.closeCard = () => document.getElementById("card").style.display = "none";
 
 // ── story modes ───────────────────────────────────────────────────────────────
 const STORIES = {
-  flows: { t:"💱 Money flows — Level 0", c:"L0",
-    l:["Capital hunts risk-adjusted return across markets — the navy arcs.",
-       "US↔EU ≈ $1.9T/yr · US↔CN ≈ $1.2T/yr · US↔JP ≈ $0.9T/yr gross portfolio flows",
-       "JP → EM: the yen carry trade — funding leg of global risk appetite",
-       "One hawkish Fed print reverses the arrows within hours: EM sells off first (highest β).",
-       "dΓᵐ = b₀(Γᵐ, ν⁰, αᵐ, Φ_mm′) dt + σ₀ dBᵐ"] },
-  policy: { t:"🏛 Policy cascade — a Mode II operator fires", c:"T_w",
-    l:["T+0ms — FOMC statement hits the wire (red halo: the US core).",
-       "T+50ms — HFT and futures reprice: L1 types absorb the shock.",
-       "T+2h — L2 funds rebalance: b_p⁽ⁱ⁾ = −durᵢ·Δr across every asset.",
-       "T+2d — retail flows follow the headlines, hours behind the move.",
-       "One decision · four levels · the red edges are T_w = A_w s + b_w + Σ_w ε."] },
-  retail: { t:"📱 Retail crisis — the legible crowd", c:"μ_retail",
-    l:["500M retail agents (outer gray cloud) increasingly ask the same 3 AI assistants.",
-       "μ_retail = (1−h)·μ_idio + h·c_t — platform consensus c_t, concentration h(a)↑",
-       "GME Jan 2021: behavioral jump measure ν_η spiked ≈46× its calm average.",
-       "More adoption → stronger fade signal for institutions → and more synchronized fragility.",
-       "The Cramér-Rao floor says: you cannot average this away — you must model it."] },
-  osc: { t:"🌊 Market oscillation — the field breathes", c:"FPK",
-    l:["Watch the outer cloud: agent positions disperse and re-concentrate.",
-       "∂μ/∂t + ∇·(b*μ) = (σ²/2)Δμ + 𝓛_η μ — the FPK forward equation.",
-       "Calm: μ_t tight around consensus. Stress: dispersion doubles, then forced liquidation.",
-       "Λₜ = 𝓛V/V reads this geometry — it fired 272 trading days before Lehman (hindcast)."] },
+  chain: { t:"💰 The capital chain — savings to issuers and back", c:"L0→L6",
+    l:["Savings (L0) → institutionalization (L1) → allocation (L2) → positions (L3) → access (L4) → settlement (L5) → issuers (L6) → the real economy.",
+       "Returns — dividends, interest, buybacks — flow back along the same path.",
+       "The parallel prop/HFT layer earns liquidity money between L4–L5 only, with its own capital.",
+       "Layers are functional, not corporate: JPMorgan lives at 2, 3, 4 and 5 simultaneously.",
+       "Full taxonomy: docs/MARKET_LAYERS.md"] },
+  thread: { t:"🧠 The memory-crowding thread — May 1, the pre-echo of July", c:"w₁–w₅",
+    l:["The orange chain is the MVP figure's principal couplings, drawn on the real structure:",
+       "w₁ expert networks → funds: channel checks priced in spring what headlines told retail in July.",
+       "w₂ momentum funds hold the wedge; prime-broker ledgers watch κ arm itself.",
+       "w₃–w₄ media attention → retail chase: the wedge's last owners arrive.",
+       "w₅ retail flow ends at market-maker inventory — which sets the gap size on capitulation day.",
+       "On this snapshot the repo's own replay had Λ exiting a 126-session crisis regime (Apr 23) — deep crowding, rotation arming."] },
+  retail: { t:"📱 The retail field — the legible crowd", c:"μ_retail",
+    l:["The gray cloud around L0: self-directed accounts, increasingly fed by the same 3 AI assistants.",
+       "μ_retail = (1−h)·μ_idio + h·c_t — consensus share h rising ⇒ the crowd becomes modelable.",
+       "May 1: watchlists concentrated on the AI-memory complex at sample highs.",
+       "Theorem 1: this cannot be averaged away with data — only modeled as a mechanism.",
+       "Click any gray point for its (procedural) reading."] },
+  rings: { t:"🏛 The two rings — rules and information", c:"◎1 ◎2",
+    l:["◎2 rules ring (red, below): regulators write the constraint set every layer optimizes inside — in NNGS, regulation *is* the shared weight-sharing module per agent type.",
+       "◎1 information ring (pink, above): index weights, ratings, data and media steer flows without touching money — the filtration structure of the game.",
+       "An index inclusion is a Mode-I operator on μ; a margin-rule change is a Mode-II operator.",
+       "Neither ring holds a position. Both decide who moves first."] },
 };
 let mode = null, t0 = 0;
 document.querySelectorAll(".pill").forEach(b => b.addEventListener("click", () => {
@@ -279,21 +286,15 @@ document.querySelectorAll(".pill").forEach(b => b.addEventListener("click", () =
   if (mode === s) { mode = null; resetMode(); return; }
   mode = s; t0 = performance.now(); b.classList.add("on");
   resetMode();
-  const st = STORIES[s];
-  document.getElementById("cardChip").textContent = st.c;
-  document.getElementById("cardTitle").textContent = st.t;
-  document.getElementById("cardBody").innerHTML =
-    st.l.map(x => `<div class="ln">${x}</div>`).join("");
-  document.getElementById("card").style.display = "block";
-  if (s === "flows")  { grayMat.opacity = .10; redMat.opacity = .08;
-    flowGroup.children.forEach(l => l.material.opacity = .95); }
-  if (s === "policy") { grayMat.opacity = .10; redMat.opacity = .85; }
-  if (s === "retail") { pMat.color.set(0xEF4444); pMat.size = .034; grayMat.opacity = .12; }
+  showStory(STORIES[s]);
+  if (s === "thread") { grayMat.opacity = .12; orgMat.opacity = 1.0; }
+  if (s === "chain")  { grayMat.opacity = .6; orgMat.opacity = .25; redMat.opacity = .12; }
+  if (s === "retail") { pMat.color.set(0xEF4444); pMat.size = .065; grayMat.opacity = .15; }
+  if (s === "rings")  { grayMat.opacity = .12; redMat.opacity = .8; orgMat.opacity = .2; }
 }));
 function resetMode() {
-  grayMat.opacity = .30; redMat.opacity = .45; pMat.color.set(0x9AA1AC);
-  pMat.size = .028; pMat.opacity = .85;
-  flowGroup.children.forEach(l => l.material.opacity = .55);
+  grayMat.opacity = .42; orgMat.opacity = .95; redMat.opacity = .35;
+  pMat.color.set(0x9AA1AC); pMat.size = .05; pMat.opacity = .8;
   const p = pGeo.getAttribute("position");
   p.array.set(pBase); p.needsUpdate = true;
 }
@@ -309,18 +310,17 @@ addEventListener("resize", resize); resize();
 renderer.setAnimationLoop(() => {
   controls.update();
   const t = (performance.now() - t0) / 1000;
-  if (mode === "osc") {
+  if (mode === "retail") {
+    pMat.opacity = .5 + .35 * (0.5 + 0.5*Math.sin(t*2.6));
     const p = pGeo.getAttribute("position");
     for (let k = 0; k < p.count; k++) {
-      const b = 1 + .06 * Math.sin(t * 1.6 + (k % 97) * .35);
-      p.array[k*3]   = pBase[k*3]   * b;
+      const b = 1 + .05 * Math.sin(t * 1.7 + (k % 89) * .4);
       p.array[k*3+1] = pBase[k*3+1] * b;
       p.array[k*3+2] = pBase[k*3+2] * b;
     }
     p.needsUpdate = true;
   }
-  if (mode === "policy") redMat.opacity = .45 + .4 * (0.5 + 0.5*Math.sin(t*2.2));
-  if (mode === "retail") pMat.opacity = .55 + .35 * (0.5 + 0.5*Math.sin(t*2.6));
+  if (mode === "thread") orgMat.opacity = .7 + .3 * (0.5 + 0.5*Math.sin(t*2.4));
   renderer.render(scene, camera);
 });
 </script>

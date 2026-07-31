@@ -277,9 +277,9 @@ Lasry & Lions（2007）[8] 与 Huang、Malhamé & Caines（2006）[9] 创立了�
 
 ## 市场作为分层博弈——真实管道与博弈投影
 
-[![四层宇宙——可交互3D：旋转、缩放，点击约3700个主体中的任何一个查看其故事线](figures/network3d_preview.png)](https://hongjin-he.github.io/MicroWorld/)
+[![分层美国市场——可交互3D，2026-05-01快照：每个节点是一家真实机构，点线皆可点击](figures/network3d_preview.png)](https://hongjin-he.github.io/MicroWorld/)
 
-**[▶ 打开可交互3D宇宙](https://hongjin-he.github.io/MicroWorld/)**——拖拽旋转、滚轮缩放深入内部结构，**点击任何主体**——市场核心、机构类型、具名基金、单个交易员——查看带数字的故事线。四种叙事模式：💱 跨市场资金流动 · 🏛 一次美联储决策穿透全部四层 · 📱 散户AI危机通道 · 🌊 平均场的呼吸（FPK）。基于 three.js；布局与全部故事由 [`scripts/make_network3d.py`](scripts/make_network3d.py) 生成。
+**[▶ 打开可交互3D市场](https://hongjin-he.github.io/MicroWorld/)**——美国市场的真实分层结构，冻结在 **2026年5月1日**：按本仓库自己的回放，这一天存储板块深陷拥挤、机构转向正在上膛——距离7月崩盘还有十周。约 **100 家具名真实机构**分布在资金流第0-6层、自营/高频平行层与两个外圈，外加 420 点散户场。**点击任何节点**查看该机构在5月1日最重要的一条解读；**点击任何一条边**查看当天流经这条边两端之间最重要的信息。四种模式：💰 资本链 · 🧠 存储拥挤线索（MVP 的 w₁–w₅ 画在真实结构上）· 📱 散户场 · 🏛 规则与信息双环。所有解读均为模型推断快照，页面上明确标注。基于 three.js；全部由 [`scripts/make_network3d.py`](scripts/make_network3d.py) 生成。
 
 
 ![市场作为四层神经网络——每个神经元是一个主体，每条边是一次策略耦合](figures/four_level_network.png)
