@@ -29,6 +29,7 @@ from __future__ import annotations
 import os
 import numpy as np
 from dataclasses import dataclass
+import hashlib
 from enum import Enum
 from typing import Optional
 
@@ -42,6 +43,18 @@ class InvestorType(Enum):
     MEME_TRADER     = "meme_trader"      # social-media driven, asks about short interest
 
 
+def stable_seed(text: str, salt: int = 0) -> int:
+    """
+    Process-stable 32-bit seed derived from a string.
+
+    Python randomizes builtin hash() of str per process (PEP 456), so seeding
+    an RNG from it makes results irreproducible across interpreter launches.
+    SHA-256 is stable across processes, machines, and Python versions.
+    """
+    digest = hashlib.sha256(f"{salt}:{text}".encode("utf-8")).digest()
+    return int.from_bytes(digest[:4], "big")
+
+
 @dataclass
 class RetailQuery:
     """A single retail investor's AI query at time t."""
@@ -49,6 +62,7 @@ class RetailQuery:
     tickers: list[str]
     context: str      # natural language context (earnings, news, etc.)
     risk_tolerance: float  # 0=very conservative, 1=very aggressive
+    seed: int | None = None  # explicit seed; falls back to stable_seed(context)
 
 
 def simulate_retail_query_distribution(
@@ -145,7 +159,8 @@ def stub_llm_response(
     ticker_to_idx = {t: i for i, t in enumerate(tickers)}
     alloc = np.zeros(n)
 
-    rng = np.random.default_rng(abs(hash(query.context)) % (2**31))
+    seed = query.seed if query.seed is not None else stable_seed(query.context)
+    rng = np.random.default_rng(seed)
 
     if query.investor_type == InvestorType.PASSIVE_INDEX:
         # Equal-weight (rational passive)
