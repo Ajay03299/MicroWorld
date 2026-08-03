@@ -214,5 +214,104 @@ class TestGroupoidComposition:
         assert len(log) == len(operators)
 
 
+class TestMergerPremiumIndexing:
+    """Regression tests for merger_operator b_w indexing (Bug #1)."""
+
+    def test_merger_premium_follows_acquirer_index(self):
+        """Deal premium must be applied at the acquirer's output row, not row 0."""
+        n, d = 5, 5
+        acquirer_idx, target_idx = 2, 4
+        premium_pct = 30.0
+        op = merger_operator(
+            acquirer_idx=acquirer_idx, target_idx=target_idx,
+            n=n, premium_pct=premium_pct,
+        )
+        # Acquirer (idx 2) should map to output row 2:
+        # output rows: 0->0, 1->1, 2(acq)->2, 3->3, 4(tgt)->skipped
+        acq_out_idx = 2
+        expected_premium = np.log(1 + premium_pct / 100)
+
+        # Premium should be at acquirer output row
+        np.testing.assert_allclose(
+            op.b_w[acq_out_idx * d + P], expected_premium, rtol=1e-6,
+            err_msg="Premium should be at acquirer output row",
+        )
+        # Row 0 should have zero price shift (it's an uninvolved pass-through asset)
+        np.testing.assert_allclose(
+            op.b_w[0 * d + P], 0.0, atol=1e-10,
+            err_msg="Row 0 should have no premium when acquirer_idx != 0",
+        )
+
+    def test_merger_premium_at_zero_unchanged(self):
+        """When acquirer_idx=0, behavior is unchanged (backward compatibility)."""
+        op = merger_operator(acquirer_idx=0, target_idx=1, n=3, premium_pct=25.0)
+        expected = np.log(1.25)
+        np.testing.assert_allclose(op.b_w[0 * 5 + P], expected, rtol=1e-6)
+
+    def test_merger_volume_and_leverage_follow_acquirer(self):
+        """Volume spike and leverage shift must also follow the acquirer row."""
+        n, d = 4, 5
+        op = merger_operator(acquirer_idx=2, target_idx=0, n=n)
+        # Output mapping: 0(tgt)->skip, 1->0, 2(acq)->1, 3->2
+        acq_out_idx = 1
+        assert op.b_w[acq_out_idx * d + V] > 0, "Volume spike should be at acquirer row"
+        assert op.b_w[acq_out_idx * d + L] > 0, "Leverage shift should be at acquirer row"
+        # Other rows should have no volume/leverage shifts from merger
+        for row in [0, 2]:
+            assert op.b_w[row * d + V] == 0.0, f"Row {row} should have no volume shift"
+            assert op.b_w[row * d + L] == 0.0, f"Row {row} should have no leverage shift"
+
+
+class TestSystemicCrisisCorrelation:
+    """Regression tests for systemic_crisis_operator Sigma_w (Bug #2)."""
+
+    def test_systemic_crisis_has_cross_asset_correlation(self):
+        """Crisis Sigma_w must have non-zero off-diagonal entries in the price block."""
+        n = 4
+        op = systemic_crisis_operator(severity=0.8, n=n)
+        S = op.Sigma_w
+        # The implied covariance Cov = S @ S.T should have non-zero off-diags
+        Cov = S @ S.T
+        price_indices = [i * 5 + P for i in range(n)]
+        for i in price_indices:
+            for j in price_indices:
+                if i != j:
+                    assert abs(Cov[i, j]) > 1e-6, \
+                        f"Cov[{i},{j}] should be non-zero (crisis = correlated moves)"
+
+    def test_systemic_crisis_covariance_is_psd(self):
+        """Implied covariance must be PSD and preserve component variances."""
+        severity = 1.0
+        op = systemic_crisis_operator(severity=severity, n=5)
+        Cov = op.Sigma_w @ op.Sigma_w.T
+        eigs = np.linalg.eigvalsh(Cov)
+        assert eigs.min() >= -1e-10, f"Min eigenvalue {eigs.min()} — covariance not PSD"
+        np.testing.assert_allclose(np.diag(Cov), (severity * 0.08) ** 2)
+
+    def test_systemic_crisis_correlation_increases_with_severity(self):
+        """Higher severity should produce higher cross-asset correlation."""
+        n = 3
+        def avg_price_corr(severity):
+            op = systemic_crisis_operator(severity=severity, n=n)
+            Cov = op.Sigma_w @ op.Sigma_w.T
+            pidx = [i * 5 + P for i in range(n)]
+            stds = np.sqrt(np.array([Cov[i, i] for i in pidx]))
+            corrs = []
+            for a in range(n):
+                for b in range(a + 1, n):
+                    corrs.append(Cov[pidx[a], pidx[b]] / (stds[a] * stds[b] + 1e-12))
+            return np.mean(corrs)
+
+        rho_low = avg_price_corr(0.3)
+        rho_high = avg_price_corr(0.9)
+        assert rho_high > rho_low, \
+            f"Higher severity should give higher correlation: {rho_high:.3f} vs {rho_low:.3f}"
+
+    def test_systemic_crisis_single_asset(self):
+        """n=1 should not crash (no off-diagonal terms needed)."""
+        op = systemic_crisis_operator(severity=0.5, n=1)
+        assert op.Sigma_w.shape == (5, 5)
+
+
 if __name__ == "__main__":
     pytest.main([__file__, "-v"])

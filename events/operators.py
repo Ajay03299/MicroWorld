@@ -488,13 +488,15 @@ def systemic_crisis_operator(severity: float, n: int = 1, d: int = 5) -> EventOp
         b[i * d + I] = -severity * 0.20        # opacity spike
 
     # Near-singular covariance: correlations → 1 in crisis
+    # Build the target covariance matrix for price components, then Cholesky-factor it.
     rho = 0.5 + 0.4 * severity
-    Sigma = np.zeros((n * d, n * d))
+    sigma_p = severity * 0.08  # per-asset price std dev
+    Cov = np.eye(n * d) * sigma_p ** 2
     for i in range(n):
         for j in range(n):
-            Sigma[i * d + P, j * d + P] = (severity * 0.08) ** 2 * (rho if i != j else 1.0)
-    Sigma = np.sqrt(np.abs(Sigma)) * np.sign(Sigma)  # back to std dev scale
-    Sigma = np.diag(np.maximum(np.diag(Sigma), severity * 0.08))  # ensure positive diagonal
+            if i != j:
+                Cov[i * d + P, j * d + P] = sigma_p ** 2 * rho
+    Sigma = np.linalg.cholesky(Cov)
 
     return EventOperator(
         name=f"systemic_crisis_severity{severity:.1f}",
@@ -624,13 +626,19 @@ def merger_operator(acquirer_idx: int, target_idx: int, n: int = 2, d: int = 5,
             A[out_idx * d:(out_idx + 1) * d, i * d:(i + 1) * d] = np.eye(d)
             out_idx += 1
 
+    # Compute acquirer's output row index
+    acq_out_idx = 0
+    for i in range(acquirer_idx):
+        if i != target_idx:
+            acq_out_idx += 1
+
     b = np.zeros(m * d)
-    b[0 * d + P] = np.log(1 + premium_pct / 100)  # deal premium on acquirer row
-    b[0 * d + V] = np.log(1.5)  # volume addition (approximate log-sum-exp)
-    b[0 * d + L] = 0.05  # slight leverage increase from deal financing
+    b[acq_out_idx * d + P] = np.log(1 + premium_pct / 100)  # deal premium on acquirer row
+    b[acq_out_idx * d + V] = np.log(1.5)  # volume addition (approximate log-sum-exp)
+    b[acq_out_idx * d + L] = 0.05  # slight leverage increase from deal financing
 
     Sigma = np.eye(m * d) * 0.05
-    Sigma[0 * d + P, 0 * d + P] = 0.08  # acquirer price most uncertain
+    Sigma[acq_out_idx * d + P, acq_out_idx * d + P] = 0.08  # acquirer price most uncertain
 
     return EventOperator(
         name=f"merger_acq{acquirer_idx}_tgt{target_idx}_prem{premium_pct:.0f}pct",
